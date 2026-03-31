@@ -1,0 +1,2048 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ER Dashboard — ภาพรวมห้องฉุกเฉิน</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body data-page="dashboard">
+
+<div class="sb-overlay" id="sbOverlay"></div>
+
+<!-- ── Sidebar ──────────────── -->
+<aside class="sidebar" id="sidebar">
+  <div class="sb-brand">
+    <div class="sb-logo">
+      <svg viewBox="0 0 24 24"><path d="M19 8h-3V5a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v3H5a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h3v3a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-3h3a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1z"/></svg>
+    </div>
+    <div class="sb-brand-text">
+      <h1>ER System</h1>
+      <span>Emergency Department</span>
+    </div>
+  </div>
+
+        <nav class="sb-nav">
+    <a class="sb-item active" href="dashboard.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+      Dashboard
+    </a>
+    <a class="sb-item" href="patient-list.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      ผู้ป่วยทั้งหมด
+      <span class="sb-badge">24</span>
+    </a>
+
+    <div class="sb-label">1. แจ้งเหตุ</div>
+    <a class="sb-item" href="#" id="createPAFromSidebar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      Create Arrival
+    </a>
+    <a class="sb-item" href="#" id="openPreArrival">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+      Pre-Arrival
+      <span class="sb-badge" style="background:var(--orange)">3</span>
+    </a>
+    <a class="sb-item" href="#" id="openEmsFromSidebar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      EMS Timeline
+    </a>
+
+    <div class="sb-label">2. รับผู้ป่วย</div>
+    <a class="sb-item" href="registration.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
+      ลงทะเบียน
+    </a>
+    <a class="sb-item" href="triage.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/></svg>
+      Triage คัดแยก
+    </a>
+    <a class="sb-item" href="bed-management.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      เตียง / Zone
+    </a>
+
+    <div class="sb-label">3. ดูแลรักษา</div>
+    <a class="sb-item" href="patient-profile.html?tab=orders">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 8h-3V5a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v3H5a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h3v3a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-3h3a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1z"/></svg>
+      การรักษา
+    </a>
+
+    <div class="sb-label">ระบบ</div>
+    <a class="sb-item" href="#" id="openAuditModal">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      Login Audit
+    </a>
+    <a class="sb-item" href="#">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      ตั้งค่า
+    </a>
+  </nav>
+
+  <div class="sb-footer">
+    <div class="sb-avatar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+    </div>
+    <div class="sb-user">
+      <div class="name">Admin</div>
+      <div class="role">Emergency Dept.</div>
+    </div>
+    <button class="sb-reset" id="resetDemoBtn" title="Reset Demo Data"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg></button>
+    <a href="Index.html" class="sb-logout" title="ออกจากระบบ">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+    </a>
+  </div>
+</aside>
+
+<!-- ── Main ─────────────────── -->
+<div class="main">
+  <header class="hdr">
+    <div class="hdr-left">
+      <button class="menu-btn" id="menuBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <div>
+        <h2>ER Dashboard</h2>
+        <p>ภาพรวมห้องฉุกเฉิน — สถานการณ์ปัจจุบัน</p>
+      </div>
+    </div>
+    <div class="hdr-right">
+      <div class="hdr-live"><span class="live-dot"></span>LIVE</div>
+      <span class="hdr-time" id="clock">14:32:05</span>
+      <button class="hdr-btn" id="openAlertModal">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+        <span class="dot"></span>
+      </button>
+    </div>
+  </header>
+
+  <div class="content">
+
+    <!-- Alert Banner -->
+    <div class="alert-banner" id="alertBannerBtn" style="cursor:pointer;">
+      <div class="alert-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      </div>
+      <div class="alert-body">
+        <div class="alert-title">Resuscitation Level <span class="count">2</span></div>
+        <div class="alert-desc">มีผู้ป่วยวิกฤต 2 ราย — เตียง B1 (Cardiac arrest) และ B4 (Severe trauma) กำลังรักษาอยู่</div>
+      </div>
+      <div class="alert-time">2 นาทีที่แล้ว</div>
+    </div>
+
+
+    <!-- Overview Cards (clickable) -->
+    <div class="overview-grid">
+      <a href="patient-list.html" class="ov-card red" style="text-decoration:none;">
+        <div class="ov-icon red">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <div class="ov-num red">24</div>
+        <div class="ov-label">ผู้ป่วยทั้งหมด</div>
+        <div class="ov-sub">+3 จากเมื่อวาน</div>
+      </a>
+
+      <a href="patient-list.html?tab=doctor" class="ov-card orange" style="text-decoration:none;">
+        <div class="ov-icon orange">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <div class="ov-num orange">6</div>
+        <div class="ov-label">Waiting Doctor</div>
+        <div class="ov-sub">รอเฉลี่ย 28 นาที</div>
+      </a>
+
+      <a href="patient-list.html?status=Observe" class="ov-card blue" style="text-decoration:none;">
+        <div class="ov-icon blue">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        </div>
+        <div class="ov-num blue">9</div>
+        <div class="ov-label">Observe</div>
+        <div class="ov-sub">กำลังสังเกตอาการ</div>
+      </a>
+
+      <a href="patient-list.html?status=รอเตียง" class="ov-card purple" style="text-decoration:none;">
+        <div class="ov-icon purple">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </div>
+        <div class="ov-num purple">4</div>
+        <div class="ov-label">Waiting Bed</div>
+        <div class="ov-sub">เตียงว่าง 3/12</div>
+      </a>
+
+      <a href="patient-list.html?status=รอ Admit" class="ov-card green" style="text-decoration:none;">
+        <div class="ov-icon green">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+        </div>
+        <div class="ov-num green">5</div>
+        <div class="ov-label">Waiting Refer</div>
+        <div class="ov-sub">รอส่งต่อ / Admit</div>
+      </a>
+    </div>
+
+    <!-- Pre-Arrival Incoming -->
+    <div class="pa-dash">
+      <div class="pa-dash-hd">
+        <h3 class="pa-dash-title">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;color:var(--orange);"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          Pre-Arrival Incoming
+          <span class="pa-dash-count">3</span>
+        </h3>
+        <div style="display:flex;gap:8px;align-items:center;">
+          <button class="ap-btn primary" id="createPreArrivalBtn" style="padding:6px 14px;font-size:12px;">+ สร้างเคส</button>
+          <button class="card-link" id="openEmsFromDash" style="border:none;background:none;cursor:pointer;font-family:inherit;color:var(--blue);">ดู Timeline</button>
+          <button class="card-link" id="openPreArrivalFromDash" style="border:none;background:none;cursor:pointer;font-family:inherit;">ดูทั้งหมด</button>
+        </div>
+      </div>
+      <div style="font-size:11px;color:var(--slate-400);padding:0 18px 6px;"><em>แสดง 3 เคสเร่งด่วนที่สุด — ETA countdown อัตโนมัติ</em></div>
+      <div class="pa-dash-list">
+        <!-- Case 1 -->
+        <div class="pa-mini critical" data-case-id="PA-0301" data-case-risk="Resuscitation" data-case-cc="Cardiac Arrest — ชาย ~55 ปี, CPR อยู่" data-case-eta="480" data-eta-total="600">
+          <div class="pa-mini-left">
+            <div class="pa-mini-eta-box critical">
+              <div class="pa-mini-eta-num pa-countdown" data-seconds="480">8:00</div>
+              <div class="pa-mini-eta-unit">ETA</div>
+            </div>
+          </div>
+          <div class="pa-mini-body">
+            <div class="pa-mini-top">
+              <span class="pa-mini-case">PA-0301</span>
+              <span class="pa-mini-risk critical">Resuscitation</span>
+              <span class="pa-mini-source ems">EMS 1669</span>
+              <span class="pa-mini-vehicle">รถ ALS-05</span>
+            </div>
+            <div class="pa-mini-title">Cardiac Arrest — ชาย ~55 ปี, CPR อยู่</div>
+            <div class="pa-progress"><div class="pa-progress-bar" style="width:20%;"></div></div>
+            <div class="pa-mini-status">
+              <span class="pa-status-dot blink"></span>
+              <span class="pa-status-text">กำลังเดินทาง · CPR ongoing · Lucas device on</span>
+            </div>
+            <div class="pa-mini-treats">
+              <span class="pa-treat-tag done">CPR 18 นาที</span>
+              <span class="pa-treat-tag done">Defib x2</span>
+              <span class="pa-treat-tag done">Intubation</span>
+              <span class="pa-treat-tag done">Adrenaline x2</span>
+            </div>
+          </div>
+          <button class="pa-prep-btn" data-prep-case="PA-0301">เตรียมรับ</button>
+        </div>
+        <!-- Case 2 -->
+        <div class="pa-mini emergency" data-case-id="PA-0302" data-case-risk="Emergency" data-case-cc="Severe PPH — พิมพ์ใจ ดวงดี หญิง 32 ปี" data-case-eta="1320" data-eta-total="1800">
+          <div class="pa-mini-left">
+            <div class="pa-mini-eta-box emergency">
+              <div class="pa-mini-eta-num pa-countdown" data-seconds="1320">22:00</div>
+              <div class="pa-mini-eta-unit">ETA</div>
+            </div>
+          </div>
+          <div class="pa-mini-body">
+            <div class="pa-mini-top">
+              <span class="pa-mini-case">PA-0302</span>
+              <span class="pa-mini-risk emergency">Emergency</span>
+              <span class="pa-mini-source refer">Refer รพ.ชุมชน</span>
+              <span class="pa-mini-vehicle">รถ Refer R-12</span>
+            </div>
+            <div class="pa-mini-title">Severe PPH — พิมพ์ใจ ดวงดี หญิง 32 ปี, Hb 6.2, BP 75/45</div>
+            <div class="pa-progress"><div class="pa-progress-bar" style="width:27%;"></div></div>
+            <div class="pa-mini-status">
+              <span class="pa-status-dot blink"></span>
+              <span class="pa-status-text">กำลังเดินทาง · IV running · Vital stable</span>
+            </div>
+            <div class="pa-mini-treats">
+              <span class="pa-treat-tag done">IV NSS 1000ml</span>
+              <span class="pa-treat-tag done">Oxytocin 20u</span>
+              <span class="pa-treat-tag done">O2 10 LPM</span>
+              <span class="pa-treat-tag pending">รอเลือด</span>
+            </div>
+          </div>
+          <button class="pa-prep-btn" data-prep-case="PA-0302">เตรียมรับ</button>
+        </div>
+        <!-- Case 3 -->
+        <div class="pa-mini urgent" data-case-id="PA-0303" data-case-risk="Urgent" data-case-cc="Stroke — วิชัย สุขสม ชาย 68 ปี" data-case-eta="2100" data-eta-total="2700">
+          <div class="pa-mini-left">
+            <div class="pa-mini-eta-box urgent">
+              <div class="pa-mini-eta-num pa-countdown" data-seconds="2100">35:00</div>
+              <div class="pa-mini-eta-unit">ETA</div>
+            </div>
+          </div>
+          <div class="pa-mini-body">
+            <div class="pa-mini-top">
+              <span class="pa-mini-case">PA-0303</span>
+              <span class="pa-mini-risk urgent">Urgent</span>
+              <span class="pa-mini-source ems">EMS 1669</span>
+              <span class="pa-mini-vehicle">รถ BLS-08</span>
+            </div>
+            <div class="pa-mini-title">Stroke — วิชัย สุขสม ชาย 68 ปี, แขนขาอ่อนแรง, onset 1 ชม. 20 นาที</div>
+            <div class="pa-progress"><div class="pa-progress-bar" style="width:22%;"></div></div>
+            <div class="pa-mini-status">
+              <span class="pa-status-dot blink"></span>
+              <span class="pa-status-text">กำลังเดินทาง · GCS 13 คงที่ · แจ้ง CT ล่วงหน้าแล้ว</span>
+            </div>
+            <div class="pa-mini-treats">
+              <span class="pa-treat-tag done">IV access</span>
+              <span class="pa-treat-tag done">ECG ปกติ</span>
+              <span class="pa-treat-tag done">DTX 142</span>
+              <span class="pa-treat-tag pending">รอ CT</span>
+            </div>
+          </div>
+          <button class="pa-prep-btn" data-prep-case="PA-0303">เตรียมรับ</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Triage + Bed (side by side) -->
+    <div class="section-grid">
+
+      <!-- Triage Overview -->
+      <div class="card">
+        <div class="card-hd">
+          <h3>Triage Overview</h3>
+          <a href="patient-list.html" class="card-link">ดูทั้งหมด</a>
+        </div>
+        <div class="card-bd">
+          <div class="tri-list">
+            <div class="tri-row">
+              <div class="tri-dot" style="background:var(--t-resus)"></div>
+              <div class="tri-name" style="color:var(--t-resus)">Resuscitation</div>
+              <div class="tri-bar-bg"><div class="tri-bar" style="width:12%;background:var(--t-resus)"></div></div>
+              <div class="tri-val" style="color:var(--t-resus)">2</div>
+            </div>
+            <div class="tri-row">
+              <div class="tri-dot" style="background:var(--t-emer)"></div>
+              <div class="tri-name" style="color:var(--t-emer)">Emergency</div>
+              <div class="tri-bar-bg"><div class="tri-bar" style="width:18%;background:var(--t-emer)"></div></div>
+              <div class="tri-val" style="color:var(--t-emer)">3</div>
+            </div>
+            <div class="tri-row">
+              <div class="tri-dot" style="background:var(--t-urg)"></div>
+              <div class="tri-name" style="color:var(--t-urg)">Urgent</div>
+              <div class="tri-bar-bg"><div class="tri-bar" style="width:36%;background:var(--t-urg)"></div></div>
+              <div class="tri-val" style="color:var(--t-urg)">6</div>
+            </div>
+            <div class="tri-row">
+              <div class="tri-dot" style="background:var(--t-semi)"></div>
+              <div class="tri-name" style="color:var(--t-semi)">Semi-urgent</div>
+              <div class="tri-bar-bg"><div class="tri-bar" style="width:30%;background:var(--t-semi)"></div></div>
+              <div class="tri-val" style="color:var(--t-semi)">5</div>
+            </div>
+            <div class="tri-row">
+              <div class="tri-dot" style="background:var(--t-non)"></div>
+              <div class="tri-name" style="color:var(--t-non)">Non-urgent</div>
+              <div class="tri-bar-bg"><div class="tri-bar" style="width:24%;background:var(--t-non)"></div></div>
+              <div class="tri-val" style="color:var(--t-non)">4</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bed Status -->
+      <div class="card">
+        <div class="card-hd">
+          <h3>สถานะเตียง</h3>
+          <a href="bed-management.html" class="card-link">จัดการเตียง</a>
+        </div>
+        <div class="card-bd">
+          <div class="bed-grid">
+            <div class="bed occ"><div class="bed-id">B1</div>วิกฤต</div>
+            <div class="bed occ"><div class="bed-id">B2</div>ไม่ว่าง</div>
+            <div class="bed free"><div class="bed-id">B3</div>ว่าง</div>
+            <div class="bed occ"><div class="bed-id">B4</div>วิกฤต</div>
+            <div class="bed rsv"><div class="bed-id">B5</div>จอง</div>
+            <div class="bed free"><div class="bed-id">B6</div>ว่าง</div>
+            <div class="bed occ"><div class="bed-id">B7</div>ไม่ว่าง</div>
+            <div class="bed clean"><div class="bed-id">B8</div>ทำความสะอาด</div>
+            <div class="bed occ"><div class="bed-id">B9</div>ไม่ว่าง</div>
+            <div class="bed free"><div class="bed-id">B10</div>ว่าง</div>
+            <div class="bed occ"><div class="bed-id">B11</div>ไม่ว่าง</div>
+            <div class="bed occ"><div class="bed-id">B12</div>ไม่ว่าง</div>
+          </div>
+          <div class="bed-legend">
+            <div class="bed-legend-i"><div class="dot" style="background:var(--green)"></div>ว่าง (3)</div>
+            <div class="bed-legend-i"><div class="dot" style="background:var(--red-500)"></div>ไม่ว่าง (7)</div>
+            <div class="bed-legend-i"><div class="dot" style="background:var(--warn)"></div>จอง (1)</div>
+            <div class="bed-legend-i"><div class="dot" style="background:var(--blue)"></div>ทำความสะอาด (1)</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Transport + Staff -->
+    <div class="section-grid">
+
+      <!-- Transport Overview -->
+      <div class="card">
+        <div class="card-hd">
+          <h3>การเคลื่อนย้าย</h3>
+          <span class="card-link" style="font-size:11px;color:var(--slate-400);" id="dashTrCount">0 รายการ</span>
+        </div>
+        <div class="card-bd" id="dashTransportList">
+          <!-- Filled by JS -->
+        </div>
+      </div>
+
+      <!-- Staff on duty -->
+      <div class="card">
+        <div class="card-hd">
+          <h3>ทีมเวรปัจจุบัน</h3>
+          <span class="card-link">จัดการเวร</span>
+        </div>
+        <div class="card-bd">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+            <div class="staff-row">
+              <div class="staff-item">
+                <div class="staff-avatar">สศ</div>
+                <div class="staff-info">
+                  <div class="sname">นพ.สมศักดิ์ รักษาดี</div>
+                  <div class="srole">แพทย์เวชศาสตร์ฉุกเฉิน</div>
+                </div>
+                <span class="staff-status busy">กำลังรักษา</span>
+                <span class="staff-pts">3 ราย</span>
+              </div>
+              <div class="staff-item">
+                <div class="staff-avatar">นช</div>
+                <div class="staff-info">
+                  <div class="sname">พญ.นิชา เจริญผล</div>
+                  <div class="srole">แพทย์เวชศาสตร์ฉุกเฉิน</div>
+                </div>
+                <span class="staff-status busy">กำลังรักษา</span>
+                <span class="staff-pts">2 ราย</span>
+              </div>
+              <div class="staff-item">
+                <div class="staff-avatar">วท</div>
+                <div class="staff-info">
+                  <div class="sname">นพ.วิทยา พงษ์สวัสดิ์</div>
+                  <div class="srole">Resident</div>
+                </div>
+                <span class="staff-status on">ว่าง</span>
+                <span class="staff-pts">0 ราย</span>
+              </div>
+            </div>
+            <div class="staff-row">
+              <div class="staff-item">
+                <div class="staff-avatar">สม</div>
+                <div class="staff-info">
+                  <div class="sname">พว.สมใจ ใจงาม</div>
+                  <div class="srole">หัวหน้าเวรพยาบาล</div>
+                </div>
+                <span class="staff-status busy">ดูแลผู้ป่วย</span>
+                <span class="staff-pts">4 ราย</span>
+              </div>
+              <div class="staff-item">
+                <div class="staff-avatar">ปร</div>
+                <div class="staff-info">
+                  <div class="sname">พว.ประภา ดวงแก้ว</div>
+                  <div class="srole">พยาบาล ER</div>
+                </div>
+                <span class="staff-status busy">Triage</span>
+                <span class="staff-pts">—</span>
+              </div>
+              <div class="staff-item">
+                <div class="staff-avatar">กม</div>
+                <div class="staff-info">
+                  <div class="sname">กมล สุขสันต์</div>
+                  <div class="srole">ผู้ช่วยพยาบาล</div>
+                </div>
+                <span class="staff-status on">ว่าง</span>
+                <span class="staff-pts">—</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ── Re-Triage Modal ── -->
+<div class="alert-modal-overlay" id="retriageModal">
+  <div class="alert-modal" style="max-width:560px;">
+    <div class="alert-modal-hd">
+      <div>
+        <h3 id="rtTitle">Re-Triage</h3>
+        <p style="font-size:12px;color:var(--slate-500);margin-top:2px;" id="rtSub">ประเมินซ้ำ — ปรับระดับความรุนแรง</p>
+      </div>
+      <button class="modal-close" id="closeRetriage">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="alert-modal-body" id="rtBody" style="padding-top:8px;">
+
+      <!-- Patient + Current triage -->
+      <div id="rtPatientBar"></div>
+
+      <!-- Reason -->
+      <div class="reg-section" style="margin-bottom:12px;">
+        <div class="reg-section-title" style="font-size:12px;">เหตุผลที่ Re-Triage</div>
+        <div class="reg-form">
+          <div class="nv-row">
+            <div class="nv-field full">
+              <select class="nv-input" id="rtReason">
+                <option value="">— เลือกเหตุผล —</option>
+                <option value="deteriorate">อาการแย่ลง (Deterioration)</option>
+                <option value="improve">อาการดีขึ้น (Improvement)</option>
+                <option value="new-symptom">มีอาการใหม่ (New symptom)</option>
+                <option value="vitals-change">สัญญาณชีพเปลี่ยน</option>
+                <option value="reassess">ประเมินซ้ำตามเวลา</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- New Vitals -->
+      <div class="reg-section" style="margin-bottom:12px;">
+        <div class="reg-section-title" style="font-size:12px;">สัญญาณชีพใหม่</div>
+        <div class="reg-form">
+          <div class="nv-row">
+            <div class="nv-field">
+              <label class="nv-label">BP</label>
+              <div style="display:flex;gap:4px;align-items:center;">
+                <input type="text" class="nv-input" id="rtBpSys" placeholder="SYS" style="text-align:center;" />
+                <span style="color:var(--slate-400);">/</span>
+                <input type="text" class="nv-input" id="rtBpDia" placeholder="DIA" style="text-align:center;" />
+              </div>
+            </div>
+            <div class="nv-field">
+              <label class="nv-label">HR</label>
+              <input type="text" class="nv-input" id="rtHR" placeholder="bpm" />
+            </div>
+            <div class="nv-field">
+              <label class="nv-label">SpO2</label>
+              <input type="text" class="nv-input" id="rtSpO2" placeholder="%" />
+            </div>
+            <div class="nv-field">
+              <label class="nv-label">GCS</label>
+              <input type="text" class="nv-input" id="rtGCS" placeholder="3-15" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- New Triage Level -->
+      <div class="reg-section" style="margin-bottom:12px;">
+        <div class="reg-section-title" style="font-size:12px;">ระดับ Triage ใหม่</div>
+        <div class="tri-level-grid" style="grid-template-columns:repeat(5,1fr);gap:6px;">
+          <label class="tri-level-card level1" style="padding:10px 6px;">
+            <input type="radio" name="rtLevel" value="1" />
+            <div class="tri-level-num" style="width:28px;height:28px;font-size:13px;margin-bottom:4px;">1</div>
+            <div class="tri-level-name" style="font-size:10px;">Resus</div>
+          </label>
+          <label class="tri-level-card level2" style="padding:10px 6px;">
+            <input type="radio" name="rtLevel" value="2" />
+            <div class="tri-level-num" style="width:28px;height:28px;font-size:13px;margin-bottom:4px;">2</div>
+            <div class="tri-level-name" style="font-size:10px;">Emergency</div>
+          </label>
+          <label class="tri-level-card level3" style="padding:10px 6px;">
+            <input type="radio" name="rtLevel" value="3" />
+            <div class="tri-level-num" style="width:28px;height:28px;font-size:13px;margin-bottom:4px;">3</div>
+            <div class="tri-level-name" style="font-size:10px;">Urgent</div>
+          </label>
+          <label class="tri-level-card level4" style="padding:10px 6px;">
+            <input type="radio" name="rtLevel" value="4" />
+            <div class="tri-level-num" style="width:28px;height:28px;font-size:13px;margin-bottom:4px;">4</div>
+            <div class="tri-level-name" style="font-size:10px;">Semi-urg</div>
+          </label>
+          <label class="tri-level-card level5" style="padding:10px 6px;">
+            <input type="radio" name="rtLevel" value="5" />
+            <div class="tri-level-num" style="width:28px;height:28px;font-size:13px;margin-bottom:4px;">5</div>
+            <div class="tri-level-name" style="font-size:10px;">Non-urg</div>
+          </label>
+        </div>
+      </div>
+
+      <!-- Note -->
+      <div class="reg-section" style="margin-bottom:12px;">
+        <div class="reg-section-title" style="font-size:12px;">หมายเหตุ</div>
+        <textarea class="nv-textarea" rows="2" placeholder="รายละเอียดเพิ่มเติม เช่น อาการที่เปลี่ยนแปลง..." id="rtNote"></textarea>
+      </div>
+
+      <!-- Actions -->
+      <div class="confirm-actions">
+        <button class="confirm-btn cancel" id="rtCancel">ยกเลิก</button>
+        <button class="confirm-btn danger" id="rtSubmit">บันทึก Re-Triage</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ── EMS Handover Review Modal ── -->
+<div class="alert-modal-overlay" id="handoverModal">
+  <div class="alert-modal" style="max-width:640px;">
+    <div class="alert-modal-hd">
+      <div>
+        <h3 id="handoverTitle">EMS Handover Review</h3>
+        <p style="font-size:12px;color:var(--slate-500);margin-top:2px;" id="handoverSub">—</p>
+      </div>
+      <button class="modal-close" id="closeHandover">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="alert-modal-body" id="handoverBody" style="padding-top:8px;">
+      <!-- filled by JS -->
+    </div>
+  </div>
+</div>
+
+<!-- ── Patient Quick View Modal ──── -->
+<div class="sub-overlay" id="patientQuickModal">
+  <div class="sub-box sub-wide">
+    <div class="sub-hd">
+      <h4 id="pqTitle">ข้อมูลผู้ป่วย</h4>
+      <button class="assign-close" id="closePQ">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="sub-body" id="pqBody">
+      <!-- filled by JS -->
+    </div>
+  </div>
+</div>
+
+<!-- ── Queue Full Modal ──────────── -->
+<div class="alert-modal-overlay" id="queueFullModal">
+  <div class="alert-modal" style="max-width:620px;">
+    <div class="alert-modal-hd">
+      <h3 id="queueModalTitle">คิวผู้ป่วย — ทั้งหมด</h3>
+      <button class="modal-close" id="closeQueueModal">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="alert-modal-body" id="queueModalBody" style="padding-top:8px;">
+      <!-- filled by JS -->
+    </div>
+  </div>
+</div>
+
+<!-- ── Alert Modal ──────────────── -->
+<div class="alert-modal-overlay" id="alertModal">
+  <div class="alert-modal">
+    <div class="alert-modal-hd">
+      <div>
+        <h3>Alert Panel <span style="font-size:11px;font-weight:600;color:var(--red-600);background:var(--red-50);padding:2px 8px;border-radius:6px;margin-left:6px;">12</span></h3>
+        <p style="font-size:12px;color:var(--slate-500);margin-top:2px;">แจ้งเตือนทั้งหมดที่ต้องดำเนินการ</p>
+      </div>
+      <button class="modal-close" id="closeAlertModal">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+
+    <!-- Tabs -->
+    <div class="alert-modal-tabs">
+      <button class="ap-tab active" data-filter="all">ทั้งหมด <span class="ap-tab-count">12</span></button>
+      <button class="ap-tab" data-filter="critical"><span class="ap-tab-dot" style="background:var(--red-500)"></span>วิกฤต <span class="ap-tab-count">2</span></button>
+      <button class="ap-tab" data-filter="sla"><span class="ap-tab-dot" style="background:var(--orange)"></span>SLA <span class="ap-tab-count">3</span></button>
+      <button class="ap-tab" data-filter="lab"><span class="ap-tab-dot" style="background:var(--purple)"></span>Critical Lab <span class="ap-tab-count">2</span></button>
+      <button class="ap-tab" data-filter="consult"><span class="ap-tab-dot" style="background:var(--warn)"></span>Consult <span class="ap-tab-count">3</span></button>
+      <button class="ap-tab" data-filter="transport"><span class="ap-tab-dot" style="background:var(--blue)"></span>Transport <span class="ap-tab-count">2</span></button>
+    </div>
+
+    <!-- Alert List -->
+    <div class="alert-modal-body">
+      <div class="ap-list" id="modalAlertList">
+
+        <div class="ap-card" data-type="critical">
+          <div class="ap-card-stripe red"></div>
+          <div class="ap-card-body">
+            <div class="ap-card-top"><span class="ap-badge danger">วิกฤต</span><span class="ap-card-time">2 นาที</span></div>
+            <div class="ap-card-title">Cardiac Arrest — CPR กำลังดำเนินการ</div>
+            <div class="ap-card-patient"><span class="ap-card-name">สมชาย ใจดี</span><span class="ap-card-hn">HN 640001</span><span class="ap-card-bed">B1</span></div>
+            <div class="ap-card-detail">Resuscitation · นพ.สมศักดิ์ · เริ่ม CPR เมื่อ 14:30</div>
+            <div class="ap-card-actions"><button class="ap-btn primary" data-action="detail">ดูรายละเอียด</button><button class="ap-btn outline" data-action="ack">รับทราบ</button></div>
+          </div>
+        </div>
+
+        <div class="ap-card" data-type="critical">
+          <div class="ap-card-stripe red"></div>
+          <div class="ap-card-body">
+            <div class="ap-card-top"><span class="ap-badge danger">วิกฤต</span><span class="ap-card-time">8 นาที</span></div>
+            <div class="ap-card-title">Severe Trauma — Multiple injuries, GCS 8</div>
+            <div class="ap-card-patient"><span class="ap-card-name">กิตติ ศรีสุข</span><span class="ap-card-hn">HN 640045</span><span class="ap-card-bed">B4</span></div>
+            <div class="ap-card-detail">Resuscitation · ส่งต่อจาก EMS · BP 80/50 · HR 130</div>
+            <div class="ap-card-actions"><button class="ap-btn primary" data-action="detail">ดูรายละเอียด</button><button class="ap-btn outline" data-action="ack">รับทราบ</button></div>
+          </div>
+        </div>
+
+        <div class="ap-card" data-type="sla">
+          <div class="ap-card-stripe orange"></div>
+          <div class="ap-card-body">
+            <div class="ap-card-top"><span class="ap-badge warn-badge">เกิน SLA</span><span class="ap-card-time">รอ 52 นาที</span></div>
+            <div class="ap-card-title">รอแพทย์เกิน SLA — Emergency (เกณฑ์ 15 นาที)</div>
+            <div class="ap-card-patient"><span class="ap-card-name">วิภา แสงทอง</span><span class="ap-card-hn">HN 640012</span><span class="ap-card-bed">B4</span></div>
+            <div class="ap-card-detail">Emergency · Chest pain · เกิน SLA 37 นาที</div>
+            <div class="ap-card-actions"><button class="ap-btn primary" data-action="assign">มอบหมายแพทย์</button></div>
+          </div>
+        </div>
+
+        <div class="ap-card" data-type="sla">
+          <div class="ap-card-stripe orange"></div>
+          <div class="ap-card-body">
+            <div class="ap-card-top"><span class="ap-badge warn-badge">เกิน SLA</span><span class="ap-card-time">รอ 38 นาที</span></div>
+            <div class="ap-card-title">รอแพทย์เกิน SLA — Urgent (เกณฑ์ 30 นาที)</div>
+            <div class="ap-card-patient"><span class="ap-card-name">ประภาส รุ่งเรือง</span><span class="ap-card-hn">HN 640025</span><span class="ap-card-bed">B7</span></div>
+            <div class="ap-card-detail">Urgent · Abdominal pain · เกิน SLA 8 นาที</div>
+            <div class="ap-card-actions"><button class="ap-btn primary" data-action="assign">มอบหมายแพทย์</button></div>
+          </div>
+        </div>
+
+        <div class="ap-card" data-type="sla">
+          <div class="ap-card-stripe orange"></div>
+          <div class="ap-card-body">
+            <div class="ap-card-top"><span class="ap-badge near-sla">ใกล้เกิน SLA</span><span class="ap-card-time">รอ 25 นาที</span></div>
+            <div class="ap-card-title">ใกล้เกิน SLA — Urgent (เหลือ 5 นาที)</div>
+            <div class="ap-card-patient"><span class="ap-card-name">นภา เจริญสุข</span><span class="ap-card-hn">HN 640031</span><span class="ap-card-bed">B9</span></div>
+            <div class="ap-card-detail">Urgent · High fever 40.2C · เหลือเวลา 5 นาที</div>
+            <div class="ap-card-actions"><button class="ap-btn primary" data-action="assign">มอบหมายแพทย์</button></div>
+          </div>
+        </div>
+
+        <div class="ap-card" data-type="lab">
+          <div class="ap-card-stripe purple"></div>
+          <div class="ap-card-body">
+            <div class="ap-card-top"><span class="ap-badge lab-badge">Critical Lab</span><span class="ap-card-time">5 นาที</span></div>
+            <div class="ap-card-title">Troponin I สูงวิกฤต — 15.8 ng/mL (ปกติ &lt;0.04)</div>
+            <div class="ap-card-patient"><span class="ap-card-name">วิภา แสงทอง</span><span class="ap-card-hn">HN 640012</span><span class="ap-card-bed">B4</span></div>
+            <div class="ap-card-detail">สงสัย STEMI · ECG: ST elevation V1-V4</div>
+            <div class="ap-card-actions"><button class="ap-btn primary" data-action="ack-consult">รับทราบ + Consult</button><button class="ap-btn outline" data-action="lab">ดูผล Lab</button></div>
+          </div>
+        </div>
+
+        <div class="ap-card" data-type="lab">
+          <div class="ap-card-stripe purple"></div>
+          <div class="ap-card-body">
+            <div class="ap-card-top"><span class="ap-badge lab-badge">Critical Lab</span><span class="ap-card-time">18 นาที</span></div>
+            <div class="ap-card-title">K+ สูงวิกฤต — 7.2 mEq/L (ปกติ 3.5-5.0)</div>
+            <div class="ap-card-patient"><span class="ap-card-name">สมชาย ใจดี</span><span class="ap-card-hn">HN 640001</span><span class="ap-card-bed">B1</span></div>
+            <div class="ap-card-detail">CKD patient · ต้องให้ Calcium gluconate + Kayexalate</div>
+            <div class="ap-card-actions"><button class="ap-btn primary" data-action="ack-med">รับทราบ + สั่งยา</button><button class="ap-btn outline" data-action="lab">ดูผล Lab</button></div>
+          </div>
+        </div>
+
+        <div class="ap-card" data-type="consult">
+          <div class="ap-card-stripe yellow"></div>
+          <div class="ap-card-body">
+            <div class="ap-card-top"><span class="ap-badge consult-badge">Consult ค้าง</span><span class="ap-card-time">รอ 1 ชม. 15 นาที</span></div>
+            <div class="ap-card-title">Ortho Consult — Open fracture Rt. tibia</div>
+            <div class="ap-card-patient"><span class="ap-card-name">กิตติ ศรีสุข</span><span class="ap-card-hn">HN 640045</span><span class="ap-card-bed">B4</span></div>
+            <div class="ap-card-detail">ส่ง consult 13:17 · Ortho ยังไม่ตอบรับ · โทร 2 ครั้ง</div>
+            <div class="ap-card-actions"><button class="ap-btn primary" data-action="call">โทรติดตาม</button></div>
+          </div>
+        </div>
+
+        <div class="ap-card" data-type="consult">
+          <div class="ap-card-stripe yellow"></div>
+          <div class="ap-card-body">
+            <div class="ap-card-top"><span class="ap-badge consult-badge">Consult ค้าง</span><span class="ap-card-time">รอ 45 นาที</span></div>
+            <div class="ap-card-title">Cardio Consult — Suspected STEMI</div>
+            <div class="ap-card-patient"><span class="ap-card-name">วิภา แสงทอง</span><span class="ap-card-hn">HN 640012</span><span class="ap-card-bed">B4</span></div>
+            <div class="ap-card-detail">Cardio ตอบรับแล้ว กำลังเดินทาง · ETA 10 นาที</div>
+            <div class="ap-card-actions"><button class="ap-btn primary" data-action="detail">ดูรายละเอียด</button><button class="ap-btn outline" data-action="call">โทรติดตาม</button></div>
+          </div>
+        </div>
+
+        <div class="ap-card" data-type="consult">
+          <div class="ap-card-stripe yellow"></div>
+          <div class="ap-card-body">
+            <div class="ap-card-top"><span class="ap-badge consult-badge">Consult ค้าง</span><span class="ap-card-time">รอ 30 นาที</span></div>
+            <div class="ap-card-title">Med Consult — DKA, pH 7.1</div>
+            <div class="ap-card-patient"><span class="ap-card-name">ปรีชา มั่นคง</span><span class="ap-card-hn">HN 640050</span><span class="ap-card-bed">B11</span></div>
+            <div class="ap-card-detail">ส่ง consult 14:02 · รอ Med on-call ตอบรับ</div>
+            <div class="ap-card-actions"><button class="ap-btn primary" data-action="call">โทรติดตาม</button></div>
+          </div>
+        </div>
+
+        <div class="ap-card" data-type="transport">
+          <div class="ap-card-stripe blue"></div>
+          <div class="ap-card-body">
+            <div class="ap-card-top"><span class="ap-badge transport-badge">Transport ค้าง</span><span class="ap-card-time">รอ 55 นาที</span></div>
+            <div class="ap-card-title">รอ Admit Ward 5A — เตียงยังไม่พร้อม</div>
+            <div class="ap-card-patient"><span class="ap-card-name">มาลี สายชล</span><span class="ap-card-hn">HN 640002</span><span class="ap-card-bed">B2</span></div>
+            <div class="ap-card-detail">อนุมัติ Admit แล้ว · Ward กำลังเตรียมเตียง</div>
+            <div class="ap-card-actions"><button class="ap-btn primary" data-action="call-ward">โทร Ward</button><button class="ap-btn outline" data-action="change-ward">เปลี่ยน Ward</button></div>
+          </div>
+        </div>
+
+        <div class="ap-card" data-type="transport">
+          <div class="ap-card-stripe blue"></div>
+          <div class="ap-card-body">
+            <div class="ap-card-top"><span class="ap-badge transport-badge">Transport ค้าง</span><span class="ap-card-time">รอ 20 นาที</span></div>
+            <div class="ap-card-title">รอ Refer รพ.ศูนย์ — ต้องการ Cath Lab</div>
+            <div class="ap-card-patient"><span class="ap-card-name">วิภา แสงทอง</span><span class="ap-card-hn">HN 640012</span><span class="ap-card-bed">B4</span></div>
+            <div class="ap-card-detail">ติดต่อ รพ.ศูนย์ แล้ว · รอรถ Refer · ETA 15 นาที</div>
+            <div class="ap-card-actions"><button class="ap-btn primary" data-action="track-refer">ติดตามรถ Refer</button><button class="ap-btn outline" data-action="prep-patient">เตรียมผู้ป่วย</button></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── Toast ── -->
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- ── Assign Doctor Modal ── -->
+<div class="assign-overlay" id="assignModal">
+  <div class="assign-box">
+    <div class="assign-hd">
+      <h4>มอบหมายแพทย์</h4>
+      <button class="assign-close" id="assignClose">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <p class="assign-patient" id="assignPatient">ผู้ป่วย: —</p>
+    <div class="assign-list">
+      <button class="assign-doc" data-doc="นพ.สมศักดิ์ รักษาดี">
+        <div class="assign-doc-avatar">สศ</div>
+        <div class="assign-doc-info">
+          <div class="assign-doc-name">นพ.สมศักดิ์ รักษาดี</div>
+          <div class="assign-doc-role">แพทย์เวชศาสตร์ฉุกเฉิน · 3 ราย</div>
+        </div>
+        <span class="assign-doc-status busy">ไม่ว่าง</span>
+      </button>
+      <button class="assign-doc" data-doc="พญ.นิชา เจริญผล">
+        <div class="assign-doc-avatar">นช</div>
+        <div class="assign-doc-info">
+          <div class="assign-doc-name">พญ.นิชา เจริญผล</div>
+          <div class="assign-doc-role">แพทย์เวชศาสตร์ฉุกเฉิน · 2 ราย</div>
+        </div>
+        <span class="assign-doc-status busy">ไม่ว่าง</span>
+      </button>
+      <button class="assign-doc" data-doc="นพ.วิทยา พงษ์สวัสดิ์">
+        <div class="assign-doc-avatar">วท</div>
+        <div class="assign-doc-info">
+          <div class="assign-doc-name">นพ.วิทยา พงษ์สวัสดิ์</div>
+          <div class="assign-doc-role">Resident · 0 ราย</div>
+        </div>
+        <span class="assign-doc-status free">ว่าง</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ── Patient Detail Panel ── -->
+<div class="sub-overlay" id="detailPanel">
+  <div class="sub-box sub-wide">
+    <div class="sub-hd">
+      <h4 id="detailTitle">รายละเอียดผู้ป่วย</h4>
+      <button class="assign-close" onclick="document.getElementById('detailPanel').classList.remove('show')">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="sub-body" id="detailBody">
+      <!-- filled by JS -->
+    </div>
+  </div>
+</div>
+
+<!-- ── Lab Result Panel ── -->
+<div class="sub-overlay" id="labPanel">
+  <div class="sub-box sub-wide">
+    <div class="sub-hd">
+      <h4>ผลตรวจ Lab</h4>
+      <button class="assign-close" onclick="document.getElementById('labPanel').classList.remove('show')">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="sub-body" id="labBody">
+      <!-- filled by JS -->
+    </div>
+  </div>
+</div>
+
+<!-- ── Contact / Call Panel ── -->
+<div class="sub-overlay" id="callPanel">
+  <div class="sub-box">
+    <div class="sub-hd">
+      <h4 id="callTitle">โทรติดตาม</h4>
+      <button class="assign-close" onclick="document.getElementById('callPanel').classList.remove('show')">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="sub-body" id="callBody">
+      <!-- filled by JS -->
+    </div>
+  </div>
+</div>
+
+<!-- ── Confirm Panel ── -->
+<div class="sub-overlay" id="confirmPanel">
+  <div class="sub-box sub-small">
+    <div class="sub-hd">
+      <h4 id="confirmTitle">ยืนยัน</h4>
+      <button class="assign-close" onclick="document.getElementById('confirmPanel').classList.remove('show')">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="sub-body" id="confirmBody">
+      <!-- filled by JS -->
+    </div>
+  </div>
+</div>
+
+<!-- ── Login Audit Modal ── -->
+<div class="alert-modal-overlay" id="auditModal">
+  <div class="alert-modal" style="max-width:780px;">
+    <div class="alert-modal-hd">
+      <div>
+        <h3>Login Audit</h3>
+        <p style="font-size:12px;color:var(--slate-500);margin-top:2px;">ประวัติการเข้าสู่ระบบทั้งหมด</p>
+      </div>
+      <button class="modal-close" id="closeAuditModal">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+
+    <!-- Summary -->
+    <div class="audit-summary">
+      <div class="audit-stat">
+        <div class="audit-stat-num green">18</div>
+        <div class="audit-stat-label">สำเร็จ</div>
+      </div>
+      <div class="audit-stat">
+        <div class="audit-stat-num red">4</div>
+        <div class="audit-stat-label">ล้มเหลว</div>
+      </div>
+      <div class="audit-stat">
+        <div class="audit-stat-num orange">2</div>
+        <div class="audit-stat-label">PIN ผิด</div>
+      </div>
+      <div class="audit-stat">
+        <div class="audit-stat-num blue">6</div>
+        <div class="audit-stat-label">ผู้ใช้งาน</div>
+      </div>
+    </div>
+
+    <!-- Filter -->
+    <div class="audit-filter">
+      <button class="ap-tab active" data-audit="all">ทั้งหมด</button>
+      <button class="ap-tab" data-audit="success">สำเร็จ</button>
+      <button class="ap-tab" data-audit="fail">ล้มเหลว</button>
+      <button class="ap-tab" data-audit="pin-fail">PIN ผิด</button>
+    </div>
+
+    <!-- Table -->
+    <div class="alert-modal-body">
+      <div class="audit-table-wrap">
+        <table class="audit-table">
+          <thead>
+            <tr>
+              <th>เวลา</th>
+              <th>ผู้ใช้</th>
+              <th>สถานะ</th>
+              <th>PIN</th>
+              <th>IP Address</th>
+              <th>อุปกรณ์</th>
+            </tr>
+          </thead>
+          <tbody id="auditBody">
+            <tr data-status="success">
+              <td class="audit-time">30/03/2026 14:32:18</td>
+              <td><span class="audit-user">admin</span></td>
+              <td><span class="audit-badge success">สำเร็จ</span></td>
+              <td><span class="audit-badge success">ผ่าน</span></td>
+              <td class="audit-ip">192.168.1.45</td>
+              <td class="audit-device">Chrome · macOS</td>
+            </tr>
+            <tr data-status="success">
+              <td class="audit-time">30/03/2026 13:15:42</td>
+              <td><span class="audit-user">nurse01</span></td>
+              <td><span class="audit-badge success">สำเร็จ</span></td>
+              <td><span class="audit-badge success">ผ่าน</span></td>
+              <td class="audit-ip">192.168.1.32</td>
+              <td class="audit-device">Safari · iPad</td>
+            </tr>
+            <tr data-status="pin-fail">
+              <td class="audit-time">30/03/2026 12:48:05</td>
+              <td><span class="audit-user">admin</span></td>
+              <td><span class="audit-badge warn">รหัสผ่านถูก</span></td>
+              <td><span class="audit-badge danger">PIN ผิด</span></td>
+              <td class="audit-ip">192.168.1.45</td>
+              <td class="audit-device">Chrome · macOS</td>
+            </tr>
+            <tr data-status="fail">
+              <td class="audit-time">30/03/2026 12:45:30</td>
+              <td><span class="audit-user">admin</span></td>
+              <td><span class="audit-badge danger">ล้มเหลว</span></td>
+              <td><span class="audit-badge muted">—</span></td>
+              <td class="audit-ip">192.168.1.45</td>
+              <td class="audit-device">Chrome · macOS</td>
+            </tr>
+            <tr data-status="success">
+              <td class="audit-time">30/03/2026 11:20:10</td>
+              <td><span class="audit-user">dr.somsak</span></td>
+              <td><span class="audit-badge success">สำเร็จ</span></td>
+              <td><span class="audit-badge success">ผ่าน</span></td>
+              <td class="audit-ip">192.168.1.18</td>
+              <td class="audit-device">Chrome · Windows</td>
+            </tr>
+            <tr data-status="fail">
+              <td class="audit-time">30/03/2026 10:55:22</td>
+              <td><span class="audit-user">nurse03</span></td>
+              <td><span class="audit-badge danger">ล้มเหลว</span></td>
+              <td><span class="audit-badge muted">—</span></td>
+              <td class="audit-ip">192.168.1.55</td>
+              <td class="audit-device">Firefox · Windows</td>
+            </tr>
+            <tr data-status="success">
+              <td class="audit-time">30/03/2026 09:30:15</td>
+              <td><span class="audit-user">nurse02</span></td>
+              <td><span class="audit-badge success">สำเร็จ</span></td>
+              <td><span class="audit-badge success">ผ่าน</span></td>
+              <td class="audit-ip">192.168.1.40</td>
+              <td class="audit-device">Chrome · Android</td>
+            </tr>
+            <tr data-status="pin-fail">
+              <td class="audit-time">30/03/2026 09:28:50</td>
+              <td><span class="audit-user">nurse02</span></td>
+              <td><span class="audit-badge warn">รหัสผ่านถูก</span></td>
+              <td><span class="audit-badge danger">PIN ผิด</span></td>
+              <td class="audit-ip">192.168.1.40</td>
+              <td class="audit-device">Chrome · Android</td>
+            </tr>
+            <tr data-status="fail">
+              <td class="audit-time">30/03/2026 08:12:44</td>
+              <td><span class="audit-user">unknown</span></td>
+              <td><span class="audit-badge danger">ล้มเหลว</span></td>
+              <td><span class="audit-badge muted">—</span></td>
+              <td class="audit-ip">10.0.0.99</td>
+              <td class="audit-device">curl · Unknown</td>
+            </tr>
+            <tr data-status="success">
+              <td class="audit-time">30/03/2026 07:45:08</td>
+              <td><span class="audit-user">dr.nicha</span></td>
+              <td><span class="audit-badge success">สำเร็จ</span></td>
+              <td><span class="audit-badge success">ผ่าน</span></td>
+              <td class="audit-ip">192.168.1.22</td>
+              <td class="audit-device">Safari · iPhone</td>
+            </tr>
+            <tr data-status="fail">
+              <td class="audit-time">30/03/2026 07:40:33</td>
+              <td><span class="audit-user">dr.nicha</span></td>
+              <td><span class="audit-badge danger">ล้มเหลว</span></td>
+              <td><span class="audit-badge muted">—</span></td>
+              <td class="audit-ip">192.168.1.22</td>
+              <td class="audit-device">Safari · iPhone</td>
+            </tr>
+            <tr data-status="success">
+              <td class="audit-time">30/03/2026 07:00:02</td>
+              <td><span class="audit-user">nurse01</span></td>
+              <td><span class="audit-badge success">สำเร็จ</span></td>
+              <td><span class="audit-badge success">ผ่าน</span></td>
+              <td class="audit-ip">192.168.1.32</td>
+              <td class="audit-device">Safari · iPad</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── Arrival Choice Modal ── -->
+<div class="sub-overlay" id="arrivalChoiceModal">
+  <div class="sub-box" style="max-width:440px;">
+    <div class="sub-hd">
+      <h4>ผู้ป่วยมาถึง ER</h4>
+      <button class="assign-close" onclick="document.getElementById('arrivalChoiceModal').classList.remove('show')">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="sub-body">
+      <p id="acCaseInfo" style="font-size:13px;color:var(--slate-500);margin-bottom:16px;">—</p>
+
+      <!-- Option A: New patient -->
+      <div class="ac-option" id="acNewPatient">
+        <div class="ac-option-icon" style="background:var(--blue-bg);color:var(--blue);">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:22px;height:22px;"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
+        </div>
+        <div class="ac-option-body">
+          <div class="ac-option-title">ผู้ป่วยใหม่</div>
+          <div class="ac-option-desc">ไม่เคยมี HN ในระบบ → ไปหน้าลงทะเบียน</div>
+        </div>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;color:var(--slate-400);flex-shrink:0;"><polyline points="9 18 15 12 9 6"/></svg>
+      </div>
+
+      <!-- Option B: Existing patient -->
+      <div class="ac-option" id="acExistingPatient">
+        <div class="ac-option-icon" style="background:var(--green-bg);color:var(--green);">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:22px;height:22px;"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <div class="ac-option-body">
+          <div class="ac-option-title">ผู้ป่วยเก่า (มี HN)</div>
+          <div class="ac-option-desc">ค้นหา HN → ผูก Visit + EMS Timeline → ไปประวัติผู้ป่วย</div>
+        </div>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;color:var(--slate-400);flex-shrink:0;"><polyline points="9 18 15 12 9 6"/></svg>
+      </div>
+
+      <!-- Search (shown when "ผู้ป่วยเก่า" selected) -->
+      <div id="acSearchSection" style="display:none;margin-top:14px;">
+        <div class="lv-search-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" class="lv-search-input" id="acSearchInput" placeholder="ค้นหา HN, ชื่อ-สกุล..." />
+        </div>
+        <div class="lv-results" id="acResults" style="margin-top:8px;">
+          <div class="lv-result-item" data-hn="640001">
+            <div class="lv-result-avatar">สช</div>
+            <div class="lv-result-info">
+              <div class="lv-result-name">สมชาย ใจดี</div>
+              <div class="lv-result-detail">HN 640001 · ชาย 55 ปี · เตียง B1</div>
+            </div>
+            <span class="lv-result-status active">อยู่ใน ER</span>
+          </div>
+          <div class="lv-result-item" data-hn="640012">
+            <div class="lv-result-avatar">วภ</div>
+            <div class="lv-result-info">
+              <div class="lv-result-name">วิภา แสงทอง</div>
+              <div class="lv-result-detail">HN 640012 · หญิง 48 ปี · รอแพทย์</div>
+            </div>
+            <span class="lv-result-status active">อยู่ใน ER</span>
+          </div>
+          <div class="lv-result-item" data-hn="640025">
+            <div class="lv-result-avatar">ปภ</div>
+            <div class="lv-result-info">
+              <div class="lv-result-name">ประภาส รุ่งเรือง</div>
+              <div class="lv-result-detail">HN 640025 · ชาย 35 ปี · เตียง B7</div>
+            </div>
+            <span class="lv-result-status active">อยู่ใน ER</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ── Quick Prep Modal ── -->
+<div class="sub-overlay" id="quickPrepModal">
+  <div class="sub-box sub-wide">
+    <div class="sub-hd">
+      <h4 id="qpTitle">เตรียมรับผู้ป่วย</h4>
+      <button class="assign-close" id="closeQP">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="sub-body">
+
+      <!-- Case info -->
+      <div id="qpCaseInfo" style="margin-bottom:14px;"></div>
+
+      <!-- Prep checklist -->
+      <div class="reg-section" style="margin-bottom:12px;">
+        <div class="reg-section-title" style="font-size:12px;">Checklist เตรียมรับ</div>
+        <div class="qp-checklist" id="qpChecklist">
+          <label class="qp-check-item"><input type="checkbox" data-prep="team" /><div class="qp-check-icon team"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div><div><strong>เตรียมทีม</strong><span>แจ้งแพทย์ + พยาบาล + ทีม CPR</span></div></label>
+          <label class="qp-check-item"><input type="checkbox" data-prep="bed" /><div class="qp-check-icon bed"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div><div><strong>จัดเตียง</strong><span>เลือกเตียง + เตรียมพื้นที่</span></div></label>
+          <label class="qp-check-item"><input type="checkbox" data-prep="equip" /><div class="qp-check-icon equip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg></div><div><strong>เตรียมอุปกรณ์</strong><span>Defibrillator, Ventilator, Crash cart</span></div></label>
+          <label class="qp-check-item"><input type="checkbox" data-prep="blood" /><div class="qp-check-icon blood"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div><strong>เตรียมเลือด / ยา</strong><span>แจ้ง Blood bank, เตรียมยาฉุกเฉิน</span></div></label>
+          <label class="qp-check-item"><input type="checkbox" data-prep="lab" /><div class="qp-check-icon lab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg></div><div><strong>แจ้ง Lab / Imaging</strong><span>แจ้ง CT, Lab stat ล่วงหน้า</span></div></label>
+          <label class="qp-check-item"><input type="checkbox" data-prep="consult" /><div class="qp-check-icon consult"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3"/></svg></div><div><strong>Pre-consult</strong><span>แจ้งแพทย์เฉพาะทางล่วงหน้า</span></div></label>
+        </div>
+      </div>
+
+      <!-- Assign -->
+      <div class="reg-section" style="margin-bottom:12px;">
+        <div class="reg-section-title" style="font-size:12px;">มอบหมาย</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+          <div class="nv-field"><div class="nv-label">แพทย์รับผิดชอบ</div>
+            <select class="nv-input" id="qpDoctor">
+              <option value="">— เลือกแพทย์ —</option>
+              <option value="นพ.สมศักดิ์">นพ.สมศักดิ์ รักษาดี</option>
+              <option value="พญ.นิชา">พญ.นิชา เจริญผล</option>
+              <option value="นพ.วิทยา">นพ.วิทยา พงษ์สวัสดิ์ (ว่าง)</option>
+            </select>
+          </div>
+          <div class="nv-field"><div class="nv-label">เตียงที่จอง</div>
+            <select class="nv-input" id="qpBed">
+              <option value="">— เลือกเตียง —</option>
+              <option value="B3">B3 (ว่าง)</option>
+              <option value="B6">B6 (ว่าง)</option>
+              <option value="B10">B10 (ว่าง)</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Note -->
+      <div class="nv-field" style="margin-bottom:14px;"><div class="nv-label">หมายเหตุเพิ่มเติม</div><input type="text" class="nv-input" id="qpNote" placeholder="เช่น เตรียม Cath Lab standby..."></div>
+
+      <!-- Actions -->
+      <div class="confirm-actions">
+        <button class="confirm-btn cancel" id="qpCancel">ยกเลิก</button>
+        <button class="confirm-btn danger" id="qpSubmit">ยืนยันเตรียมรับ</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ── Create Pre-Arrival Modal ── -->
+<div class="alert-modal-overlay" id="createPAModal">
+  <div class="alert-modal" style="max-width:600px;">
+    <div class="alert-modal-hd">
+      <div>
+        <h3>สร้างเคส Pre-Arrival ใหม่</h3>
+        <p style="font-size:12px;color:var(--slate-500);margin-top:2px;">รับแจ้งเคสล่วงหน้าจาก EMS / 1669 / Refer</p>
+      </div>
+      <button class="modal-close" id="closeCreatePA">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="alert-modal-body" style="padding-top:12px;">
+
+      <!-- Source -->
+      <div class="reg-section" style="margin-bottom:12px;">
+        <div class="reg-section-title" style="font-size:12px;">แหล่งที่แจ้ง</div>
+        <div class="reg-source-grid" style="grid-template-columns:repeat(2,1fr);gap:8px;">
+          <label class="reg-source-card active" style="padding:12px 8px;">
+            <input type="radio" name="paSource" value="EMS 1669" checked />
+            <div class="reg-source-icon ems" style="width:36px;height:36px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
+            <div class="reg-source-text" style="font-size:12px;">EMS / 1669</div>
+          </label>
+          <label class="reg-source-card" style="padding:12px 8px;">
+            <input type="radio" name="paSource" value="Refer" />
+            <div class="reg-source-icon refer" style="width:36px;height:36px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg></div>
+            <div class="reg-source-text" style="font-size:12px;">Referral</div>
+          </label>
+        </div>
+      </div>
+
+      <!-- Patient + Clinical (unified grid) -->
+      <div class="reg-section" style="margin-bottom:12px;">
+        <div class="reg-section-title" style="font-size:12px;">ข้อมูลผู้ป่วย + อาการ</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+          <div class="nv-field"><div class="nv-label">ชื่อ (ถ้าทราบ)</div><input type="text" class="nv-input" id="cpName" placeholder="ชื่อ-สกุล หรือ ลักษณะเด่น"></div>
+          <div class="nv-field"><div class="nv-label">อาการสำคัญ<span style="color:var(--red-500);margin-left:2px;">*</span></div><input type="text" class="nv-input" id="cpCC" placeholder="เช่น Cardiac arrest, ตกจากที่สูง..."></div>
+          <div class="nv-field"><div class="nv-label">เพศ</div><select class="nv-input" id="cpGender"><option value="ชาย">ชาย</option><option value="หญิง">หญิง</option><option value="ไม่ทราบ">ไม่ทราบ</option></select></div>
+          <div class="nv-field"><div class="nv-label">ระดับ Risk<span style="color:var(--red-500);margin-left:2px;">*</span></div>
+            <select class="nv-input" id="cpRisk">
+              <option value="">— เลือก —</option>
+              <option value="resus">Resuscitation — วิกฤตทันที</option>
+              <option value="emergency">Emergency — ฉุกเฉิน</option>
+              <option value="urgent">Urgent — เร่งด่วน</option>
+              <option value="semi">Semi-urgent — ไม่เร่ง</option>
+            </select>
+          </div>
+          <div class="nv-field"><div class="nv-label">อายุ (ประมาณ)</div><input type="text" class="nv-input" id="cpAge" placeholder="เช่น ~55"></div>
+          <div class="nv-field"><div class="nv-label">ETA (นาที)<span style="color:var(--red-500);margin-left:2px;">*</span></div><input type="text" class="nv-input" id="cpETA" placeholder="เช่น 10"></div>
+          <div class="nv-field"><div class="nv-label">หมายเลขรถ / หน่วย</div><input type="text" class="nv-input" id="cpVehicle" placeholder="เช่น ALS-05, R-12"></div>
+          <div class="nv-field"><div class="nv-label">รพ.ต้นทาง (ถ้า Refer)</div><input type="text" class="nv-input" id="cpFromHosp" placeholder="เช่น รพ.ชุมชน"></div>
+        </div>
+      </div>
+
+      <!-- Vitals + Treatment -->
+      <div class="reg-section" style="margin-bottom:12px;">
+        <div class="reg-section-title" style="font-size:12px;">สัญญาณชีพ + การรักษาก่อนถึง</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;margin-bottom:8px;">
+          <div class="nv-field"><div class="nv-label">BP</div><input type="text" class="nv-input" id="cpBP" placeholder="80/50"></div>
+          <div class="nv-field"><div class="nv-label">HR</div><input type="text" class="nv-input" id="cpHR" placeholder="130"></div>
+          <div class="nv-field"><div class="nv-label">SpO2</div><input type="text" class="nv-input" id="cpSpO2" placeholder="89%"></div>
+          <div class="nv-field"><div class="nv-label">GCS</div><input type="text" class="nv-input" id="cpGCS" placeholder="3"></div>
+        </div>
+        <div class="nv-field"><div class="nv-label">การรักษาที่ทำมาแล้ว</div><input type="text" class="nv-input" id="cpTreatment" placeholder="เช่น CPR, Defib x2, IV, Intubation..."></div>
+      </div>
+
+      <!-- Actions -->
+      <div class="confirm-actions" style="margin-top:14px;">
+        <button class="confirm-btn cancel" id="cpCancel">ยกเลิก</button>
+        <button class="confirm-btn danger" id="cpSubmit">สร้างเคส Pre-Arrival</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ── Pre-Arrival Modal ── -->
+<div class="alert-modal-overlay" id="preArrivalModal">
+  <div class="alert-modal" style="max-width:720px;">
+    <div class="alert-modal-hd">
+      <div>
+        <h3>Pre-Arrival Registration <span style="font-size:11px;font-weight:600;color:var(--orange);background:var(--orange-bg);padding:2px 8px;border-radius:6px;margin-left:6px;">3 เคส</span></h3>
+        <p style="font-size:12px;color:var(--slate-500);margin-top:2px;">เคสแจ้งล่วงหน้า — เตรียมทีมและอุปกรณ์</p>
+      </div>
+      <button class="modal-close" id="closePreArrival">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+
+    <div class="alert-modal-body" style="padding-top:12px;">
+
+      <!-- Case 1: Critical -->
+      <div class="pa-card critical">
+        <div class="pa-header">
+          <div class="pa-source ems">EMS 1669</div>
+          <div class="pa-eta">
+            <div class="pa-eta-label">ETA</div>
+            <div class="pa-eta-time" data-eta="8">8 นาที</div>
+          </div>
+        </div>
+
+        <div class="pa-risk critical">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px;"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          Resuscitation — วิกฤต
+        </div>
+
+        <div class="pa-body">
+          <div class="pa-section">
+            <div class="pa-section-title">ข้อมูลผู้ป่วย</div>
+            <div class="pa-info-grid">
+              <div class="pa-info"><span class="pa-label">ชื่อ</span><span class="pa-value">ชาย ไม่ทราบชื่อ อายุประมาณ 55 ปี</span></div>
+              <div class="pa-info"><span class="pa-label">อาการ</span><span class="pa-value critical">Cardiac arrest, หมดสติ, ไม่หายใจ</span></div>
+              <div class="pa-info"><span class="pa-label">กลไก</span><span class="pa-value">ล้มหมดสติในห้าง พบโดยผู้เห็นเหตุการณ์</span></div>
+            </div>
+          </div>
+
+          <div class="pa-section">
+            <div class="pa-section-title">สัญญาณชีพ (ล่าสุดบนรถ)</div>
+            <div class="pa-vitals">
+              <div class="pa-vital"><span class="pa-vital-label">BP</span><span class="pa-vital-value critical">วัดไม่ได้</span></div>
+              <div class="pa-vital"><span class="pa-vital-label">HR</span><span class="pa-vital-value critical">VF → CPR</span></div>
+              <div class="pa-vital"><span class="pa-vital-label">SpO2</span><span class="pa-vital-value critical">วัดไม่ได้</span></div>
+              <div class="pa-vital"><span class="pa-vital-label">GCS</span><span class="pa-vital-value critical">3</span></div>
+            </div>
+          </div>
+
+          <div class="pa-section">
+            <div class="pa-section-title">การรักษาก่อนถึง ER</div>
+            <div class="pa-treatments">
+              <span class="pa-treat-tag done">CPR 10 นาที</span>
+              <span class="pa-treat-tag done">Defib x2 (200J, 200J)</span>
+              <span class="pa-treat-tag done">IV access</span>
+              <span class="pa-treat-tag done">Adrenaline 1mg x2</span>
+              <span class="pa-treat-tag done">Intubation (ETT 7.5)</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="pa-footer">
+          <div class="pa-prep-status">
+            <span class="pa-prep-tag" data-prep="team">เตรียมทีม</span>
+            <span class="pa-prep-tag" data-prep="equip">เตรียมอุปกรณ์</span>
+            <span class="pa-prep-tag" data-prep="bed">จัดเตียง</span>
+          </div>
+          <button class="ap-btn outline pa-timeline-btn">ดู Timeline</button><button class="ap-btn primary pa-accept-btn">รับเคส</button>
+        </div>
+      </div>
+
+      <!-- Case 2: Emergency Refer -->
+      <div class="pa-card emergency">
+        <div class="pa-header">
+          <div class="pa-source refer">Refer รพ.ชุมชน</div>
+          <div class="pa-eta">
+            <div class="pa-eta-label">ETA</div>
+            <div class="pa-eta-time" data-eta="22">22 นาที</div>
+          </div>
+        </div>
+
+        <div class="pa-risk emergency">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px;"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          Emergency — ฉุกเฉิน
+        </div>
+
+        <div class="pa-body">
+          <div class="pa-section">
+            <div class="pa-section-title">ข้อมูลผู้ป่วย</div>
+            <div class="pa-info-grid">
+              <div class="pa-info"><span class="pa-label">ชื่อ</span><span class="pa-value">นางสาวพิมพ์ใจ ดวงดี อายุ 32 ปี</span></div>
+              <div class="pa-info"><span class="pa-label">อาการ</span><span class="pa-value critical">Severe PPH, ตกเลือดหลังคลอด</span></div>
+              <div class="pa-info"><span class="pa-label">ประวัติ</span><span class="pa-value">คลอดปกติ 2 ชม.ก่อน, เลือดออกไม่หยุด, Hb 6.2</span></div>
+            </div>
+          </div>
+
+          <div class="pa-section">
+            <div class="pa-section-title">สัญญาณชีพ (ล่าสุดบนรถ)</div>
+            <div class="pa-vitals">
+              <div class="pa-vital"><span class="pa-vital-label">BP</span><span class="pa-vital-value critical">75/45</span></div>
+              <div class="pa-vital"><span class="pa-vital-label">HR</span><span class="pa-vital-value critical">140</span></div>
+              <div class="pa-vital"><span class="pa-vital-label">SpO2</span><span class="pa-vital-value warn">92%</span></div>
+              <div class="pa-vital"><span class="pa-vital-label">GCS</span><span class="pa-vital-value">14</span></div>
+            </div>
+          </div>
+
+          <div class="pa-section">
+            <div class="pa-section-title">การรักษาก่อนถึง ER</div>
+            <div class="pa-treatments">
+              <span class="pa-treat-tag done">IV NSS 1000ml fast drip</span>
+              <span class="pa-treat-tag done">Oxytocin 20 unit</span>
+              <span class="pa-treat-tag done">O2 mask 10 LPM</span>
+              <span class="pa-treat-tag pending">ยังไม่ได้เลือด (ขอ Cross match)</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="pa-footer">
+          <div class="pa-prep-status">
+            <span class="pa-prep-tag" data-prep="team">เตรียมทีม</span>
+            <span class="pa-prep-tag" data-prep="equip">เตรียมอุปกรณ์</span>
+            <span class="pa-prep-tag" data-prep="bed">จัดเตียง</span>
+            <span class="pa-prep-tag" data-prep="blood">เตรียมเลือด</span>
+          </div>
+          <button class="ap-btn outline pa-timeline-btn">ดู Timeline</button><button class="ap-btn primary pa-accept-btn">รับเคส</button>
+        </div>
+      </div>
+
+      <!-- Case 3: Urgent -->
+      <div class="pa-card urgent">
+        <div class="pa-header">
+          <div class="pa-source ems">EMS 1669</div>
+          <div class="pa-eta">
+            <div class="pa-eta-label">ETA</div>
+            <div class="pa-eta-time" data-eta="35">35 นาที</div>
+          </div>
+        </div>
+
+        <div class="pa-risk urgent">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px;"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Urgent — เร่งด่วน
+        </div>
+
+        <div class="pa-body">
+          <div class="pa-section">
+            <div class="pa-section-title">ข้อมูลผู้ป่วย</div>
+            <div class="pa-info-grid">
+              <div class="pa-info"><span class="pa-label">ชื่อ</span><span class="pa-value">นายวิชัย สุขสม อายุ 68 ปี</span></div>
+              <div class="pa-info"><span class="pa-label">อาการ</span><span class="pa-value warn">Stroke symptoms, แขนขาอ่อนแรงซ้าย, พูดไม่ชัด</span></div>
+              <div class="pa-info"><span class="pa-label">Onset</span><span class="pa-value">เริ่มอาการ 1 ชม. 20 นาทีก่อน (ยังอยู่ใน window)</span></div>
+            </div>
+          </div>
+
+          <div class="pa-section">
+            <div class="pa-section-title">สัญญาณชีพ (ล่าสุดบนรถ)</div>
+            <div class="pa-vitals">
+              <div class="pa-vital"><span class="pa-vital-label">BP</span><span class="pa-vital-value warn">185/110</span></div>
+              <div class="pa-vital"><span class="pa-vital-label">HR</span><span class="pa-vital-value">88</span></div>
+              <div class="pa-vital"><span class="pa-vital-label">SpO2</span><span class="pa-vital-value">97%</span></div>
+              <div class="pa-vital"><span class="pa-vital-label">GCS</span><span class="pa-vital-value">13 (E4V3M6)</span></div>
+            </div>
+          </div>
+
+          <div class="pa-section">
+            <div class="pa-section-title">การรักษาก่อนถึง ER</div>
+            <div class="pa-treatments">
+              <span class="pa-treat-tag done">IV access</span>
+              <span class="pa-treat-tag done">ECG 12 leads (ปกติ)</span>
+              <span class="pa-treat-tag done">DTX 142 mg/dL</span>
+              <span class="pa-treat-tag pending">ยังไม่ได้ CT (แจ้ง CT ล่วงหน้า)</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="pa-footer">
+          <div class="pa-prep-status">
+            <span class="pa-prep-tag" data-prep="team">เตรียมทีม</span>
+            <span class="pa-prep-tag" data-prep="ct">แจ้ง CT</span>
+            <span class="pa-prep-tag" data-prep="bed">จัดเตียง</span>
+          </div>
+          <button class="ap-btn outline pa-timeline-btn">ดู Timeline</button><button class="ap-btn primary pa-accept-btn">รับเคส</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ── EMS/Prehospital Timeline Modal ── -->
+<div class="alert-modal-overlay" id="emsTimelineModal">
+  <div class="alert-modal" style="max-width:760px;">
+    <div class="alert-modal-hd">
+      <div>
+        <h3 id="emsTimelineTitle">EMS / Prehospital Timeline</h3>
+        <p style="font-size:12px;color:var(--slate-500);margin-top:2px;" id="emsTimelineSub">ชาย ~55 ปี · EMS 1669 · Cardiac Arrest</p>
+      </div>
+      <button class="modal-close" id="closeEmsTimeline">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+
+    <div class="alert-modal-body" id="emsTimelineBody" style="padding-top:12px;">
+
+      <!-- EMS Crew Info (จาก ITEMS/1669) -->
+      <div class="ho-crew-bar" style="margin-bottom:14px;">
+        <div class="ho-crew-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;color:white;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
+        <div class="ho-crew-info">
+          <strong>ศูนย์สั่งการ 1669 สมุทรปราการ → รถ ALS-05</strong>
+          <p>ทีม: จ.ส.อ.สมพร (EMT-P) / จ.ส.อ.วีระ (EMT-B) · ข้อมูลจากรถพยาบาล · Case PA-0301</p>
+        </div>
+      </div>
+
+      <!-- Key Times (ITEMS บันทึกอัตโนมัติ) -->
+      <div style="font-size:10px;color:var(--slate-400);margin-bottom:4px;">บันทึกเวลาจากระบบ EMS 1669</div>
+      <div class="ho-times" style="margin-bottom:14px;">
+        <div class="ho-time-box"><div class="ho-time-label">รับแจ้ง</div><div class="ho-time-value">14:02</div></div>
+        <div class="ho-time-box"><div class="ho-time-label">ออกรถ</div><div class="ho-time-value">14:03</div></div>
+        <div class="ho-time-box"><div class="ho-time-label">ถึงที่เกิดเหตุ</div><div class="ho-time-value">14:10</div></div>
+        <div class="ho-time-box"><div class="ho-time-label">ออกจากที่เกิดเหตุ</div><div class="ho-time-value">14:22</div></div>
+        <div class="ho-time-box" style="background:var(--red-50);border-color:var(--red-200);"><div class="ho-time-label">ถึง รพ.</div><div class="ho-time-value" style="color:var(--red-600);">~14:32</div></div>
+      </div>
+
+      <!-- Dual Timeline -->
+      <div class="tl-dual">
+
+        <!-- EMS Timeline (Left) — ข้อมูลจาก ITEMS/PHER -->
+        <div class="tl-column">
+          <div class="tl-column-hd ems">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            EMS / Prehospital <span style="font-size:9px;font-weight:400;color:var(--slate-400);margin-left:4px;">(ระบบ EMS 1669)</span>
+          </div>
+
+          <div class="tl-track">
+            <!-- รับแจ้ง (ITEMS: auto timestamp) -->
+            <div class="tl-item dispatch">
+              <div class="tl-dot dispatch"></div>
+              <div class="tl-content">
+                <div class="tl-time">14:02</div>
+                <div class="tl-event">ศูนย์ 1669 รับแจ้งเหตุ</div>
+                <div class="tl-detail">ผู้แจ้ง: รปภ. ห้างเซ็นทรัล · ชายหมดสติ ชั้น 2 · มีคนทำ CPR อยู่</div>
+              </div>
+            </div>
+
+            <!-- ออกรถ (ITEMS: auto timestamp เมื่อกด dispatch) -->
+            <div class="tl-item dispatch">
+              <div class="tl-dot dispatch"></div>
+              <div class="tl-content">
+                <div class="tl-time">14:03</div>
+                <div class="tl-event">สั่งการออกรถ ALS-05</div>
+                <div class="tl-detail">Response time: 1 นาที · ทีม 2 คน</div>
+              </div>
+            </div>
+
+            <!-- ถึงที่เกิดเหตุ (ITEMS: EMT กดปุ่ม On Scene) -->
+            <div class="tl-item scene">
+              <div class="tl-dot scene"></div>
+              <div class="tl-content">
+                <div class="tl-time">14:10</div>
+                <div class="tl-event">ถึงจุดเกิดเหตุ</div>
+                <div class="tl-detail">ชาย ~55 ปี ไม่หายใจ ไม่มีชีพจร · Bystander CPR อยู่ · ล้มขณะกินข้าว ~8 นาทีก่อน</div>
+                <div class="tl-vitals-inline">
+                  <span class="tl-vital-tag crit">ไม่หายใจ</span>
+                  <span class="tl-vital-tag crit">ไม่มีชีพจร</span>
+                  <span class="tl-vital-tag crit">GCS: 3</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- การรักษา (ITEMS: EMT บันทึกใน app ขณะทำ) -->
+            <div class="tl-item critical">
+              <div class="tl-dot critical"></div>
+              <div class="tl-content">
+                <div class="tl-time">14:11</div>
+                <div class="tl-event">เริ่ม CPR + Monitor → VF</div>
+                <div class="tl-detail">EMS CPR ต่อจาก Bystander · ติด Monitor พบ VF</div>
+              </div>
+            </div>
+
+            <div class="tl-item critical">
+              <div class="tl-dot critical"></div>
+              <div class="tl-content">
+                <div class="tl-time">14:12</div>
+                <div class="tl-event">Defibrillation #1 — 200J</div>
+                <div class="tl-detail">ยังเป็น VF · CPR ต่อ</div>
+              </div>
+            </div>
+
+            <!-- IV + ยา (ITEMS: EMT บันทึก) -->
+            <div class="tl-item med">
+              <div class="tl-dot med"></div>
+              <div class="tl-content">
+                <div class="tl-time">14:13</div>
+                <div class="tl-event">IV Access + Adrenaline 1mg #1</div>
+                <div class="tl-detail">IV 20G Rt. arm · NSS TKO · Adrenaline ตาม ACLS</div>
+              </div>
+            </div>
+
+            <div class="tl-item critical">
+              <div class="tl-dot critical"></div>
+              <div class="tl-content">
+                <div class="tl-time">14:14</div>
+                <div class="tl-event">Defibrillation #2 — 200J</div>
+                <div class="tl-detail">ยังเป็น VF · CPR ต่อ</div>
+              </div>
+            </div>
+
+            <!-- Intubation (ITEMS: EMT บันทึก) -->
+            <div class="tl-item med">
+              <div class="tl-dot med"></div>
+              <div class="tl-content">
+                <div class="tl-time">14:17</div>
+                <div class="tl-event">Intubation ETT 7.5</div>
+                <div class="tl-detail">ใส่ท่อสำเร็จ · EtCO2 18 · ผู้ทำ: จ.ส.อ.สมพร</div>
+              </div>
+            </div>
+
+            <div class="tl-item med">
+              <div class="tl-dot med"></div>
+              <div class="tl-content">
+                <div class="tl-time">14:18</div>
+                <div class="tl-event">Adrenaline 1mg #2</div>
+                <div class="tl-detail">ซ้ำทุก 3-5 นาที ตาม protocol</div>
+              </div>
+            </div>
+
+            <!-- ออกจากที่เกิดเหตุ (ITEMS: EMT กดปุ่ม Depart Scene) -->
+            <div class="tl-item transport">
+              <div class="tl-dot transport"></div>
+              <div class="tl-content">
+                <div class="tl-time">14:22</div>
+                <div class="tl-event">เริ่มลำเลียง (Load & Go)</div>
+                <div class="tl-detail">Scene time: 12 นาที · ติด LUCAS · CPR ระหว่างทาง</div>
+              </div>
+            </div>
+
+            <!-- แจ้ง ER (โทรศัพท์/Line — ทำได้จริงในไทย) -->
+            <div class="tl-item transport">
+              <div class="tl-dot transport"></div>
+              <div class="tl-content">
+                <div class="tl-time">14:24</div>
+                <div class="tl-event">โทรแจ้ง ER ล่วงหน้า</div>
+                <div class="tl-detail">แจ้ง: ชาย ~55 ปี Cardiac arrest VF · CPR 14 นาที · Defib x2 · ETT in place · Adrenaline x2 · อีก ~8 นาทีถึง</div>
+              </div>
+            </div>
+
+            <!-- ระหว่างทาง (ITEMS: EMT บันทึก) -->
+            <div class="tl-item med">
+              <div class="tl-dot med"></div>
+              <div class="tl-content">
+                <div class="tl-time">14:26</div>
+                <div class="tl-event">Adrenaline 1mg #3 (ระหว่างทาง)</div>
+                <div class="tl-detail">LUCAS กดอกต่อเนื่อง · VF persist</div>
+              </div>
+            </div>
+
+            <!-- ETA (คำนวณจากระยะทาง/ประมาณ) -->
+            <div class="tl-item arriving">
+              <div class="tl-dot arriving"></div>
+              <div class="tl-content">
+                <div class="tl-time">~14:32</div>
+                <div class="tl-event">คาดว่าถึง ER</div>
+                <div class="tl-detail">Total CPR: ~20 นาที · Defib x2 · Adrenaline x3 · ETT · LUCAS active · VF ตลอด</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ER Timeline (Right) -->
+        <div class="tl-column">
+          <div class="tl-column-hd er">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;"><path d="M19 8h-3V5a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v3H5a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h3v3a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-3h3a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1z"/></svg>
+            ER Timeline
+          </div>
+
+          <div class="tl-track">
+            <div class="tl-item notify">
+              <div class="tl-dot notify"></div>
+              <div class="tl-content">
+                <div class="tl-time">14:24:10</div>
+                <div class="tl-event">รับแจ้ง Pre-Arrival</div>
+                <div class="tl-detail">ระบบรับข้อมูลจาก EMS · Cardiac arrest (VF) · Witness · CPR ongoing · ETA 8 นาที · พว.ประภา รับสาย</div>
+              </div>
+            </div>
+
+            <div class="tl-item prepare">
+              <div class="tl-dot prepare"></div>
+              <div class="tl-content">
+                <div class="tl-time">14:25:00</div>
+                <div class="tl-event">Activate Resuscitation Team</div>
+                <div class="tl-detail">แจ้ง นพ.สมศักดิ์ (ER attending) + พว.สมใจ (หัวหน้าเวร) + ทีม CPR 3 คน + ทีม Airway 1 คน · ทั้งหมดรับทราบแล้ว</div>
+              </div>
+            </div>
+
+            <div class="tl-item prepare">
+              <div class="tl-dot prepare"></div>
+              <div class="tl-content">
+                <div class="tl-time">14:26:00</div>
+                <div class="tl-event">เตรียมอุปกรณ์ Resuscitation</div>
+                <div class="tl-detail">Defibrillator (ZOLL R Series) เปิดพร้อม · Ventilator transport mode · Drug tray CPR (Adrenaline, Amiodarone, NaHCO3) · Crash cart → เตียง B1 · แจ้ง Lab เตรียม stat CBC/BMP/Troponin/ABG</div>
+              </div>
+            </div>
+
+            <div class="tl-item prepare">
+              <div class="tl-dot prepare"></div>
+              <div class="tl-content">
+                <div class="tl-time">14:27</div>
+                <div class="tl-event">จัดเตียง B1</div>
+                <div class="tl-detail">เตียง B1 พร้อม · Resuscitation zone</div>
+              </div>
+            </div>
+
+            <div class="tl-item waiting">
+              <div class="tl-dot waiting"></div>
+              <div class="tl-content">
+                <div class="tl-time">14:27–</div>
+                <div class="tl-event">รอผู้ป่วย...</div>
+                <div class="tl-detail">ทีมพร้อม ณ เตียง B1 · รอรถ EMS ถึง</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ── Link Visit Modal (ค้นหา/สร้าง Visit) ── -->
+<div class="sub-overlay" id="linkVisitModal">
+  <div class="sub-box sub-wide">
+    <div class="sub-hd">
+      <h4>ผูกกับ Visit ER</h4>
+      <button class="assign-close" id="closeLinkVisit">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="sub-body">
+
+      <!-- Step 1: Search -->
+      <div id="linkStep1">
+        <p style="font-size:13px;color:var(--slate-600);margin-bottom:14px;">ค้นหาผู้ป่วยจาก HN หรือชื่อ หรือสร้าง Visit ใหม่</p>
+
+        <div class="lv-search-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" class="lv-search-input" id="lvSearchInput" placeholder="ค้นหา HN, ชื่อ-สกุล..." />
+        </div>
+
+        <!-- Search results -->
+        <div class="lv-results" id="lvResults">
+          <div class="lv-result-item" data-hn="640001" data-name="สมชาย ใจดี">
+            <div class="lv-result-avatar">สช</div>
+            <div class="lv-result-info">
+              <div class="lv-result-name">สมชาย ใจดี</div>
+              <div class="lv-result-detail">HN 640001 · ชาย 55 ปี · เตียง B1 · Resuscitation</div>
+            </div>
+            <span class="lv-result-status active">อยู่ใน ER</span>
+          </div>
+          <div class="lv-result-item" data-hn="640099" data-name="ผู้ป่วยใหม่ (ชายไม่ทราบชื่อ)">
+            <div class="lv-result-avatar" style="background:var(--orange-bg);color:var(--orange);">?</div>
+            <div class="lv-result-info">
+              <div class="lv-result-name">ผู้ป่วยใหม่ (ชายไม่ทราบชื่อ)</div>
+              <div class="lv-result-detail">HN 640099 · สร้าง Visit ใหม่อัตโนมัติ · จาก Pre-Arrival</div>
+            </div>
+            <span class="lv-result-status new">Visit ใหม่</span>
+          </div>
+        </div>
+
+        <div class="lv-divider">หรือ</div>
+
+        <button class="ap-btn outline" style="width:100%;" id="lvCreateNew">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px;"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          สร้าง Visit ใหม่ (ยังไม่ทราบ HN)
+        </button>
+      </div>
+
+      <!-- Step 1.5: Create New Visit Form -->
+      <div id="linkStepNew" style="display:none;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;">
+          <button class="assign-close" id="lvBackFromNew" style="width:28px;height:28px;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+          </button>
+          <h4 style="font-size:15px;font-weight:700;color:var(--slate-900);">สร้าง Visit ใหม่</h4>
+        </div>
+
+        <!-- Auto-filled from EMS -->
+        <div class="nv-prefill">
+          <div class="nv-prefill-hd">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            ดึงข้อมูลจาก EMS อัตโนมัติ
+          </div>
+          <div class="nv-prefill-row"><span class="nv-prefill-label">แหล่งที่มา</span><span class="nv-prefill-value">EMS 1669 · รถ ALS-05</span></div>
+          <div class="nv-prefill-row"><span class="nv-prefill-label">อาการ</span><span class="nv-prefill-value" style="color:var(--red-600);font-weight:600;">Cardiac Arrest · VF · CPR ongoing</span></div>
+          <div class="nv-prefill-row"><span class="nv-prefill-label">Triage</span><span class="nv-prefill-value" style="color:var(--red-600);font-weight:600;">Resuscitation (Level 1)</span></div>
+        </div>
+
+        <!-- Form -->
+        <div class="nv-form">
+          <div class="nv-row">
+            <div class="nv-field">
+              <label class="nv-label">HN (สร้างอัตโนมัติ)</label>
+              <input type="text" class="nv-input" value="640100" readonly style="background:var(--slate-50);color:var(--slate-400);" />
+            </div>
+            <div class="nv-field">
+              <label class="nv-label">เตียง</label>
+              <select class="nv-input" id="nvBed">
+                <option value="">— เลือกเตียง —</option>
+                <option value="B1" selected>B1 (Resuscitation)</option>
+                <option value="B3">B3 (ว่าง)</option>
+                <option value="B6">B6 (ว่าง)</option>
+                <option value="B10">B10 (ว่าง)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="nv-row">
+            <div class="nv-field">
+              <label class="nv-label">เพศ</label>
+              <div class="nv-radio-group">
+                <label class="nv-radio"><input type="radio" name="nvGender" value="male" checked /> ชาย</label>
+                <label class="nv-radio"><input type="radio" name="nvGender" value="female" /> หญิง</label>
+                <label class="nv-radio"><input type="radio" name="nvGender" value="unknown" /> ไม่ทราบ</label>
+              </div>
+            </div>
+            <div class="nv-field">
+              <label class="nv-label">อายุโดยประมาณ</label>
+              <input type="text" class="nv-input" value="~55 ปี" id="nvAge" />
+            </div>
+          </div>
+
+          <div class="nv-row">
+            <div class="nv-field full">
+              <label class="nv-label">ชื่อ-สกุล (ถ้าทราบ)</label>
+              <input type="text" class="nv-input" placeholder="ยังไม่ทราบชื่อ — กรอกภายหลังได้" id="nvName" />
+            </div>
+          </div>
+
+          <div class="nv-row">
+            <div class="nv-field full">
+              <label class="nv-label">หมายเหตุ / ลักษณะเด่น</label>
+              <input type="text" class="nv-input" placeholder="เช่น สวมเสื้อสีแดง, มีรอยสัก ฯลฯ" id="nvNote" />
+            </div>
+          </div>
+
+          <div class="nv-row">
+            <div class="nv-field full">
+              <label class="nv-label">แพทย์รับผิดชอบ</label>
+              <select class="nv-input" id="nvDoctor">
+                <option value="">— เลือกแพทย์ —</option>
+                <option value="นพ.สมศักดิ์ รักษาดี" selected>นพ.สมศักดิ์ รักษาดี (กำลังรักษา 3 ราย)</option>
+                <option value="พญ.นิชา เจริญผล">พญ.นิชา เจริญผล (กำลังรักษา 2 ราย)</option>
+                <option value="นพ.วิทยา พงษ์สวัสดิ์">นพ.วิทยา พงษ์สวัสดิ์ (ว่าง)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="confirm-actions" style="margin-top:18px;">
+          <button class="confirm-btn cancel" id="lvCancelNew">ยกเลิก</button>
+          <button class="confirm-btn danger" id="lvSubmitNew">สร้าง Visit + ผูก EMS</button>
+        </div>
+      </div>
+
+      <!-- Step 2: Confirm -->
+      <div id="linkStep2" style="display:none;">
+        <div class="lv-confirm-card">
+          <div class="lv-confirm-section">
+            <div class="lv-confirm-label">EMS Case</div>
+            <div class="lv-confirm-value">ชาย ~55 ปี · EMS 1669 · Cardiac Arrest</div>
+          </div>
+          <div class="lv-confirm-arrow">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px;color:var(--red-600);"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+          </div>
+          <div class="lv-confirm-section">
+            <div class="lv-confirm-label">ER Visit</div>
+            <div class="lv-confirm-value" id="lvConfirmPatient">—</div>
+          </div>
+        </div>
+
+        <div class="lv-confirm-info">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px;flex-shrink:0;color:var(--blue);"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+          <span>ข้อมูล EMS Timeline จะถูกรวมเข้ากับประวัติผู้ป่วย แพทย์จะเห็น timeline ตั้งแต่จุดเกิดเหตุ</span>
+        </div>
+
+        <div class="confirm-actions" style="margin-top:18px;">
+          <button class="confirm-btn cancel" id="lvBack">ย้อนกลับ</button>
+          <button class="confirm-btn danger" id="lvConfirmLink">ยืนยันผูก Visit</button>
+        </div>
+      </div>
+
+      <!-- Step 3: Success -->
+      <div id="linkStep3" style="display:none;text-align:center;padding:20px 0;">
+        <div style="width:56px;height:56px;background:var(--green-bg);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:28px;height:28px;color:var(--green);"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <div style="font-size:18px;font-weight:700;color:var(--slate-900);margin-bottom:4px;">ผูก Visit สำเร็จ</div>
+        <div style="font-size:13px;color:var(--slate-500);margin-bottom:6px;" id="lvSuccessDetail">—</div>
+        <div style="font-size:12px;color:var(--slate-400);margin-bottom:20px;">EMS Timeline ถูกรวมเข้ากับประวัติผู้ป่วยแล้ว</div>
+        <button class="ap-btn primary" id="lvViewCombined">ดู Timeline รวม</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ── Combined Timeline Modal ── -->
+<div class="alert-modal-overlay" id="combinedTimelineModal">
+  <div class="alert-modal" style="max-width:620px;">
+    <div class="alert-modal-hd">
+      <div>
+        <h3>Timeline รวม</h3>
+        <p style="font-size:12px;color:var(--slate-500);margin-top:2px;" id="combinedSub">สมชาย ใจดี · HN 640001 · EMS → ER</p>
+      </div>
+      <button class="modal-close" id="closeCombinedTL">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+
+    <div class="alert-modal-body" style="padding-top:12px;">
+
+
+
+      <!-- Single merged timeline -->
+      <div class="tl-track" style="padding-left:18px;">
+
+        <div class="tl-item dispatch">
+          <div class="tl-dot dispatch"></div>
+          <div class="tl-content">
+            <div class="tl-time">14:02 <span class="tl-phase ems">EMS</span></div>
+            <div class="tl-event">รับแจ้งเหตุ — 1669</div>
+            <div class="tl-detail">ชายหมดสติ ห้างเซ็นทรัล ชั้น 2</div>
+          </div>
+        </div>
+
+        <div class="tl-item dispatch">
+          <div class="tl-dot dispatch"></div>
+          <div class="tl-content">
+            <div class="tl-time">14:03 <span class="tl-phase ems">EMS</span></div>
+            <div class="tl-event">สั่งการออกรถ ALS-05</div>
+          </div>
+        </div>
+
+        <div class="tl-item scene">
+          <div class="tl-dot scene"></div>
+          <div class="tl-content">
+            <div class="tl-time">14:10 <span class="tl-phase ems">EMS</span></div>
+            <div class="tl-event">ถึงจุดเกิดเหตุ</div>
+            <div class="tl-detail">ไม่หายใจ ไม่มีชีพจร</div>
+          </div>
+        </div>
+
+        <div class="tl-item critical">
+          <div class="tl-dot critical"></div>
+          <div class="tl-content">
+            <div class="tl-time">14:11 <span class="tl-phase ems">EMS</span></div>
+            <div class="tl-event">เริ่ม CPR</div>
+            <div class="tl-detail">Bystander CPR ~1 นาที → EMS ต่อ</div>
+          </div>
+        </div>
+
+        <div class="tl-item critical">
+          <div class="tl-dot critical"></div>
+          <div class="tl-content">
+            <div class="tl-time">14:12 <span class="tl-phase ems">EMS</span></div>
+            <div class="tl-event">ECG → VF</div>
+          </div>
+        </div>
+
+        <div class="tl-item critical">
+          <div class="tl-dot critical"></div>
+          <div class="tl-content">
+            <div class="tl-time">14:13 <span class="tl-phase ems">EMS</span></div>
+            <div class="tl-event">Defibrillation #1 — 200J</div>
+            <div class="tl-detail">ยังเป็น VF → CPR ต่อ</div>
+          </div>
+        </div>
+
+        <div class="tl-item med">
+          <div class="tl-dot med"></div>
+          <div class="tl-content">
+            <div class="tl-time">14:14 <span class="tl-phase ems">EMS</span></div>
+            <div class="tl-event">IV Access · Adrenaline 1mg #1</div>
+          </div>
+        </div>
+
+        <div class="tl-item critical">
+          <div class="tl-dot critical"></div>
+          <div class="tl-content">
+            <div class="tl-time">14:15 <span class="tl-phase ems">EMS</span></div>
+            <div class="tl-event">Defibrillation #2 — 200J</div>
+          </div>
+        </div>
+
+        <div class="tl-item med">
+          <div class="tl-dot med"></div>
+          <div class="tl-content">
+            <div class="tl-time">14:18 <span class="tl-phase ems">EMS</span></div>
+            <div class="tl-event">Intubation ETT 7.5</div>
+            <div class="tl-detail">EtCO2 18 · Adrenaline 1mg #2</div>
+          </div>
+        </div>
+
+        <div class="tl-item transport">
+          <div class="tl-dot transport"></div>
+          <div class="tl-content">
+            <div class="tl-time">14:22 <span class="tl-phase ems">EMS</span></div>
+            <div class="tl-event">เริ่มลำเลียง — Lucas device on</div>
+          </div>
+        </div>
+
+        <div class="tl-item notify">
+          <div class="tl-dot notify"></div>
+          <div class="tl-content">
+            <div class="tl-time">14:24 <span class="tl-phase ems">EMS</span> <span class="tl-phase er">ER</span></div>
+            <div class="tl-event">แจ้ง ER ล่วงหน้า → ER รับแจ้ง</div>
+            <div class="tl-detail">จุดเชื่อม EMS ↔ ER</div>
+          </div>
+        </div>
+
+        <div class="tl-item prepare">
+          <div class="tl-dot prepare"></div>
+          <div class="tl-content">
+            <div class="tl-time">14:25 <span class="tl-phase er">ER</span></div>
+            <div class="tl-event">เตรียมทีม Resuscitation</div>
+            <div class="tl-detail">นพ.สมศักดิ์ + ทีม CPR 5 คน</div>
+          </div>
+        </div>
+
+        <div class="tl-item prepare">
+          <div class="tl-dot prepare"></div>
+          <div class="tl-content">
+            <div class="tl-time">14:26 <span class="tl-phase er">ER</span></div>
+            <div class="tl-event">เตรียมอุปกรณ์ + จัดเตียง B1</div>
+          </div>
+        </div>
+
+        <div class="tl-item scene">
+          <div class="tl-dot arriving"></div>
+          <div class="tl-content">
+            <div class="tl-time">14:32 <span class="tl-phase ems">EMS</span> <span class="tl-phase er">ER</span></div>
+            <div class="tl-event">ผู้ป่วยถึง ER — รับเข้าเตียง B1</div>
+            <div class="tl-detail">Handover: CPR 21 นาที · Defib x2 · Adrenaline x2 · ETT in place</div>
+          </div>
+        </div>
+
+        <div class="tl-item critical">
+          <div class="tl-dot critical"></div>
+          <div class="tl-content">
+            <div class="tl-time">14:33 <span class="tl-phase er">ER</span></div>
+            <div class="tl-event">CPR ต่อ — Defibrillation #3 (200J)</div>
+            <div class="tl-detail">→ ROSC ได้ · HR 92 · BP 85/60</div>
+          </div>
+        </div>
+
+        <div class="tl-item med">
+          <div class="tl-dot med"></div>
+          <div class="tl-content">
+            <div class="tl-time">14:35 <span class="tl-phase er">ER</span></div>
+            <div class="tl-event">Post-ROSC care</div>
+            <div class="tl-detail">Adrenaline drip · Target Temp Management · Lab stat</div>
+          </div>
+        </div>
+
+        <div class="tl-item prepare">
+          <div class="tl-dot prepare"></div>
+          <div class="tl-content">
+            <div class="tl-time">14:40 <span class="tl-phase er">ER</span></div>
+            <div class="tl-event">ลงทะเบียน — สมชาย ใจดี HN 640001</div>
+            <div class="tl-detail">บัตร ปชช. จากกระเป๋า · ญาติมาถึง ER ยืนยันตัวตน</div>
+          </div>
+        </div>
+
+        <div class="tl-item transport">
+          <div class="tl-dot transport"></div>
+          <div class="tl-content">
+            <div class="tl-time">14:50 <span class="tl-phase er">ER</span></div>
+            <div class="tl-event">ส่ง Cath Lab — สงสัย STEMI</div>
+            <div class="tl-detail">Cardio consult → รับ case → Door-to-balloon target</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="data.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

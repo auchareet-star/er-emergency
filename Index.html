@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ER System — เข้าสู่ระบบ</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body data-page="login">
+
+  <!-- ── Left Panel ─────────────────────────── -->
+  <aside class="panel-left">
+    <div class="brand">
+      <div class="brand-icon">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M19 8h-3V5a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v3H5a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h3v3a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-3h3a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1z"/>
+        </svg>
+      </div>
+      <div class="brand-text">
+        <h1>ER Management System</h1>
+        <span>โรงพยาบาลตัวอย่าง · Emergency Department</span>
+      </div>
+    </div>
+
+    <div class="hero-block">
+      <div class="er-badge">
+        <span class="dot"></span>
+        Emergency Response
+      </div>
+      <h2>ระบบบริหารจัดการ<br/><span class="text-red">ห้องฉุกเฉิน</span></h2>
+      <p>ระบบรองรับการจัดการผู้ป่วยฉุกเฉินแบบ Real-time ตั้งแต่การรับผู้ป่วย คัดแยกระดับความรุนแรง ไปจนถึงการส่งต่อการรักษา</p>
+
+      <div class="stat-row">
+        <div class="stat-item">
+          <div class="num">24/7</div>
+          <div class="label">ให้บริการตลอดเวลา</div>
+        </div>
+        <div class="stat-item">
+          <div class="num">5 ระดับ</div>
+          <div class="label">Triage Classification</div>
+        </div>
+        <div class="stat-item">
+          <div class="num">Real-time</div>
+          <div class="label">อัปเดตสถานะผู้ป่วย</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="left-footer">&copy; 2026 ER Management System · v2.4.1</div>
+  </aside>
+
+  <!-- ── Right Panel ─────────────────────────── -->
+  <main class="panel-right">
+    <div class="login-card">
+
+      <div class="login-header">
+        <h3>เข้าสู่ระบบ</h3>
+        <p>กรุณาล็อกอินด้วยบัญชีผู้ใช้ของคุณเพื่อเข้าใช้งาน</p>
+      </div>
+
+      <!-- Alert -->
+      <div class="alert error" id="alertError">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+        </svg>
+        <span id="alertErrorMsg">ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง</span>
+      </div>
+
+      <!-- Login Form -->
+      <form id="loginForm" novalidate>
+        <div class="form-group">
+          <label for="username">ชื่อผู้ใช้ (Username)</label>
+          <div class="input-wrap">
+            <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+            </svg>
+            <input type="text" id="username" name="username" placeholder="กรอกชื่อผู้ใช้ เช่น nurse01" autocomplete="username" spellcheck="false" />
+          </div>
+          <div class="field-error" id="usernameError">กรุณากรอกชื่อผู้ใช้</div>
+        </div>
+
+        <div class="form-group">
+          <label for="password">รหัสผ่าน (Password)</label>
+          <div class="input-wrap">
+            <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+            </svg>
+            <input type="password" id="password" name="password" placeholder="กรอกรหัสผ่าน" autocomplete="current-password" />
+            <button type="button" class="toggle-pw" id="togglePw" tabindex="-1" aria-label="แสดง/ซ่อนรหัสผ่าน">
+              <svg id="eyeIcon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
+              </svg>
+            </button>
+          </div>
+          <div class="field-error" id="passwordError">กรุณากรอกรหัสผ่าน</div>
+        </div>
+
+        <div class="options-row">
+          <label class="checkbox-label">
+            <input type="checkbox" id="remember" />
+            จดจำการเข้าสู่ระบบ
+          </label>
+          <a href="#" class="forgot-link" id="forgotLink">ลืมรหัสผ่าน?</a>
+        </div>
+
+        <button type="submit" class="btn-login" id="btnLogin">
+          <span class="btn-text">เข้าสู่ระบบ</span>
+          <span class="spinner"></span>
+        </button>
+      </form>
+
+      <div class="divider"><span>การยืนยันตัวตน</span></div>
+
+      <div class="auth-info">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+        </svg>
+        <p>ระบบยืนยันตัวตน 2 ชั้น — เข้าสู่ระบบด้วยรหัสผ่าน แล้วยืนยันด้วย PIN 6 หลักอีกครั้ง เพื่อความปลอดภัยสูงสุด</p>
+      </div>
+
+      <!-- Note -->
+      <div class="note-password">
+        <div class="note-title">Noted — Demo Account</div>
+        <div class="note-row">
+          <span class="note-label">Username</span>
+          <span class="note-value">admin</span>
+        </div>
+        <div class="note-row">
+          <span class="note-label">Password</span>
+          <span class="note-value">admin1234</span>
+        </div>
+        <div class="note-row">
+          <span class="note-label">PIN</span>
+          <span class="note-value">1 2 3 4 5 6</span>
+        </div>
+      </div>
+
+      <div class="login-footer">หากพบปัญหาการเข้าสู่ระบบ ติดต่อ IT Support ภายใน 1234</div>
+    </div>
+  </main>
+
+  <!-- ── PIN Modal ─────────────────────────── -->
+  <div class="modal-overlay" id="pinModal">
+    <div class="modal">
+      <button type="button" class="modal-close" id="modalClose">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+
+      <!-- PIN Form -->
+      <div class="modal-form" id="modalForm">
+        <div class="modal-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+        </div>
+
+        <div class="modal-title">ยืนยันตัวตนด้วย PIN</div>
+        <div class="modal-subtitle">กรอกรหัส PIN 6 หลักเพื่อเข้าสู่ระบบ</div>
+
+        <div class="modal-user-wrap">
+          <div class="modal-user-badge">
+            <div class="user-avatar-sm">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+              </svg>
+            </div>
+            <span id="modalUsername">admin</span>
+          </div>
+        </div>
+
+        <div class="pin-wrap" id="pinWrap">
+          <input type="text" inputmode="numeric" maxlength="6" class="pin-hidden-input" id="pinHiddenInput" autocomplete="off" />
+          <div class="pin-boxes" id="pinBoxes">
+            <div class="pin-box" data-index="0"></div>
+            <div class="pin-box" data-index="1"></div>
+            <div class="pin-box" data-index="2"></div>
+            <div class="pin-box" data-index="3"></div>
+            <div class="pin-box" data-index="4"></div>
+            <div class="pin-box" data-index="5"></div>
+          </div>
+        </div>
+
+        <div class="pin-feedback">
+          <div class="pin-error" id="pinError"></div>
+          <div class="pin-hint" id="pinHint">กด Backspace เพื่อลบ · วาง PIN ได้</div>
+        </div>
+
+        <button type="button" class="btn-verify" id="btnVerify" disabled>
+          <span class="btn-text">ยืนยัน PIN</span>
+          <span class="spinner"></span>
+        </button>
+
+        <div class="modal-footer-hint">กด Esc เพื่อย้อนกลับ</div>
+      </div>
+
+      <!-- Success State -->
+      <div class="modal-success" id="modalSuccess">
+        <div class="modal-icon success-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+        </div>
+        <div class="modal-title">ยืนยันตัวตนสำเร็จ</div>
+        <div class="success-msg">เข้าสู่ระบบสำเร็จ</div>
+        <div class="success-redirect">กำลังนำคุณไปยังหน้า Dashboard...</div>
+        <div class="success-loader"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Forgot Password Modal ───────────── -->
+  <div class="modal-overlay forgot-modal" id="forgotModal">
+    <div class="modal">
+      <button type="button" class="modal-close" id="forgotClose">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+
+      <!-- Forgot Form -->
+      <div class="forgot-form" id="forgotForm">
+        <div class="modal-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+          </svg>
+        </div>
+
+        <div class="modal-title">ลืมรหัสผ่าน</div>
+        <div class="modal-subtitle">กรอกชื่อผู้ใช้หรืออีเมลเพื่อรับลิงก์รีเซ็ตรหัสผ่าน</div>
+
+        <div class="forgot-form-group">
+          <label for="forgotUsername">ชื่อผู้ใช้ หรือ อีเมล</label>
+          <div class="forgot-input-wrap">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+            </svg>
+            <input type="text" class="forgot-input" id="forgotUsername" placeholder="กรอกชื่อผู้ใช้ หรือ อีเมล" autocomplete="username" spellcheck="false" />
+          </div>
+          <div class="forgot-field-error" id="forgotError">กรุณากรอกชื่อผู้ใช้หรืออีเมล</div>
+        </div>
+
+        <button type="button" class="btn-forgot" id="btnForgot">
+          <span class="btn-text">ส่งลิงก์รีเซ็ตรหัสผ่าน</span>
+          <span class="spinner"></span>
+        </button>
+
+        <button type="button" class="forgot-back" id="forgotBack">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"/>
+          </svg>
+          กลับไปหน้าเข้าสู่ระบบ
+        </button>
+      </div>
+
+      <!-- Forgot Success -->
+      <div class="forgot-success" id="forgotSuccess">
+        <div class="modal-icon success-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>
+          </svg>
+        </div>
+        <div class="modal-title">ส่งลิงก์เรียบร้อยแล้ว</div>
+        <div class="modal-subtitle">กรุณาตรวจสอบอีเมลของคุณ</div>
+
+        <div class="forgot-email-sent" id="forgotSentTo">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+          <span id="forgotSentEmail">admin</span>
+        </div>
+
+        <p class="forgot-success-note">ลิงก์รีเซ็ตรหัสผ่านจะถูกส่งไปยังอีเมลที่ผูกกับบัญชี<br/>ลิงก์จะหมดอายุภายใน 15 นาที</p>
+
+        <button type="button" class="btn-back-login" id="btnBackLogin">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"/>
+          </svg>
+          กลับไปหน้าเข้าสู่ระบบ
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="data.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

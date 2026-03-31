@@ -1,0 +1,1232 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ER — ประวัติผู้ป่วย</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body data-page="profile">
+
+<div class="sb-overlay" id="sbOverlay"></div>
+
+<!-- ── Sidebar ── -->
+<aside class="sidebar" id="sidebar">
+  <div class="sb-brand">
+    <div class="sb-logo"><svg viewBox="0 0 24 24"><path d="M19 8h-3V5a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v3H5a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h3v3a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-3h3a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1z"/></svg></div>
+    <div class="sb-brand-text"><h1>ER System</h1><span>Emergency Department</span></div>
+  </div>
+        <nav class="sb-nav">
+    <a class="sb-item" href="dashboard.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+      Dashboard
+    </a>
+    <a class="sb-item" href="patient-list.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      ผู้ป่วยทั้งหมด
+      <span class="sb-badge">24</span>
+    </a>
+
+    <div class="sb-label">1. แจ้งเหตุ</div>
+    <a class="sb-item" href="#" id="createPAFromSidebar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      Create Arrival
+    </a>
+    <a class="sb-item" href="#" id="openPreArrival">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+      Pre-Arrival
+      <span class="sb-badge" style="background:var(--orange)">3</span>
+    </a>
+    <a class="sb-item" href="#" id="openEmsFromSidebar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      EMS Timeline
+    </a>
+
+    <div class="sb-label">2. รับผู้ป่วย</div>
+    <a class="sb-item" href="registration.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
+      ลงทะเบียน
+    </a>
+    <a class="sb-item" href="triage.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/></svg>
+      Triage คัดแยก
+    </a>
+    <a class="sb-item" href="bed-management.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      เตียง / Zone
+    </a>
+
+    <div class="sb-label">3. ดูแลรักษา</div>
+    <a class="sb-item active" href="patient-profile.html?tab=orders">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 8h-3V5a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v3H5a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h3v3a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-3h3a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1z"/></svg>
+      การรักษา
+    </a>
+
+    <div class="sb-label">ระบบ</div>
+    <a class="sb-item" href="#" id="openAuditModal">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      Login Audit
+    </a>
+    <a class="sb-item" href="#">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      ตั้งค่า
+    </a>
+  </nav>
+  <div class="sb-footer">
+    <div class="sb-avatar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+    <div class="sb-user"><div class="name">Admin</div><div class="role">Emergency Dept.</div></div>
+    <button class="sb-reset" id="resetDemoBtn" title="Reset Demo Data"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg></button>
+    <a href="Index.html" class="sb-logout"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></a>
+  </div>
+</aside>
+
+<!-- ── Main ── -->
+<div class="main">
+  <header class="hdr">
+    <div class="hdr-left">
+      <button class="menu-btn" id="menuBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+      <div>
+        <h2 id="ppHeaderName">ประวัติผู้ป่วย</h2>
+        <p id="ppHeaderSub">Patient Profile</p>
+      </div>
+    </div>
+    <div class="hdr-right"><span class="hdr-time" id="clock">14:32</span></div>
+  </header>
+
+  <div class="content" id="ppContent">
+
+    <!-- Empty state: Search + Select patient -->
+    <div id="ppEmptyState">
+
+      <!-- Search -->
+      <div class="card" style="margin-bottom:14px;">
+        <div class="card-hd"><h3>เลือกผู้ป่วยเพื่อเริ่มการรักษา</h3></div>
+        <div class="card-bd">
+          <div class="pl-search" style="margin-bottom:14px;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" placeholder="ค้นหา ชื่อ, HN..." id="ppSearchInput" />
+          </div>
+
+          <!-- Patient list (rendered by JS from ERStore — เฉพาะรอแพทย์) -->
+          <div id="ppPatientList">
+            <!-- JS renders here -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2-Column Layout (shown when ?hn= provided) -->
+    <div id="ppMainLayout" style="display:none;">
+
+    <!-- Patient header (compact) -->
+    <div class="pp-header-card" id="ppHeaderCard">
+      <div class="pp-avatar" id="ppAvatar">สช</div>
+      <div class="pp-header-info">
+        <div class="pp-name" id="ppName">สมชาย ใจดี</div>
+        <div class="pp-sub" id="ppSub">ชาย 55 ปี · HN 640001</div>
+        <div class="pp-tags" id="ppTags">
+          <span class="pq-tag level1">Resuscitation</span>
+          <span class="pq-tag bed-tag">เตียง B1</span>
+          <span class="pq-tag" style="background:var(--blue-bg);color:var(--blue);">กำลังรักษา</span>
+          <span class="pq-tag" style="background:var(--red-100);color:var(--red-600);">EMS</span>
+        </div>
+      </div>
+      <div class="pp-header-right">
+        <div class="pp-arrival"><span class="pp-arrival-label">มาถึง ER</span><span class="pp-arrival-time" id="ppArrival">14:32</span></div>
+      </div>
+    </div>
+
+    <!-- Active Consult Banner -->
+    <div id="conActiveBanner" style="display:none;">
+      <!-- Filled by JS — one card per active consult -->
+    </div>
+
+    <!-- Active Transport Banner (shown when transport is active) -->
+    <div id="trActiveBanner" class="tr-active-banner" style="display:none;">
+      <!-- Filled by JS -->
+    </div>
+
+    <!-- 2-Column: Sidebar left + Content right -->
+    <div class="pp-layout">
+
+      <!-- Left: Patient Summary (always visible) -->
+      <div class="pp-sidebar">
+        <!-- Vital snapshot -->
+        <div class="pp-side-card">
+          <div class="pp-side-title">สัญญาณชีพล่าสุด <span style="font-weight:400;color:var(--slate-400);">14:45</span></div>
+          <div class="pp-vital-grid">
+            <div class="pp-v"><span class="pp-v-label">BP</span><span class="pp-v-val crit">85/60</span></div>
+            <div class="pp-v"><span class="pp-v-label">HR</span><span class="pp-v-val">92</span></div>
+            <div class="pp-v"><span class="pp-v-label">SpO2</span><span class="pp-v-val warn">93%</span></div>
+            <div class="pp-v"><span class="pp-v-label">GCS</span><span class="pp-v-val crit">3T</span></div>
+            <div class="pp-v"><span class="pp-v-label">Temp</span><span class="pp-v-val">37.2</span></div>
+            <div class="pp-v"><span class="pp-v-label">RR</span><span class="pp-v-val">ETT</span></div>
+          </div>
+        </div>
+
+        <!-- Allergy -->
+        <div class="pp-side-card">
+          <div class="pp-side-title">แพ้ยา</div>
+          <div class="allergy-status nka" style="font-size:12px;">NKA — ไม่แพ้ยา</div>
+        </div>
+
+        <!-- Key Info -->
+        <div class="pp-side-card">
+          <div class="pp-side-title">ข้อมูลสำคัญ</div>
+          <div class="pp-side-row"><span>Triage</span><span style="color:var(--red-600);font-weight:700;">Level 1</span></div>
+          <div class="pp-side-row"><span>แพทย์</span><span>นพ.สมศักดิ์</span></div>
+          <div class="pp-side-row"><span>D2D</span><span style="color:var(--green);">1 นาที</span></div>
+          <div class="pp-side-row"><span>ROSC</span><span>14:33</span></div>
+          <div class="pp-side-row"><span>PMH</span><span>HT, DLP</span></div>
+          <div class="pp-side-row"><span>สิทธิ์</span><span>UC</span></div>
+        </div>
+
+        <!-- Status change -->
+        <div class="pp-side-card" id="ppStatusCard">
+          <div class="pp-side-title">เปลี่ยนสถานะ</div>
+          <div id="ppStatusBtns">
+            <!-- Filled by JS based on current status -->
+          </div>
+        </div>
+
+        <!-- Quick actions -->
+        <div class="pp-side-card">
+          <div class="pp-side-title">ดำเนินการด่วน</div>
+          <div class="qa-grid">
+            <a href="#" class="qa-btn qa-primary" data-tab="orders">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              สั่งการรักษา
+            </a>
+            <a href="#" class="qa-btn qa-green" data-tab="results">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>
+              ผลตรวจ
+            </a>
+            <a href="#" class="qa-btn qa-warn" id="conOpenModal">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              Consult
+            </a>
+            <a href="#" class="qa-btn qa-blue" id="trOpenModal">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+              Porter
+            </a>
+          </div>
+          <a href="#" class="qa-link" data-tab="disposition">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:12px;height:12px;"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+            สรุปจำหน่าย (Disposition)
+          </a>
+        </div>
+      </div>
+
+      <!-- Right: Content tabs -->
+      <div class="pp-content-area">
+        <div class="pp-tabs" id="ppTabs">
+          <button class="pp-tab active" data-tab="overview">ภาพรวม</button>
+          <button class="pp-tab" data-tab="orders">คำสั่งการรักษา</button>
+          <button class="pp-tab" data-tab="results">ผลตรวจ</button>
+          <button class="pp-tab" data-tab="disposition">Disposition</button>
+          <button class="pp-tab" data-tab="timeline">Timeline</button>
+        </div>
+
+    <!-- Tab: Overview -->
+    <div class="pp-panel" id="panelOverview">
+      <div class="section-grid">
+        <!-- Left: Info -->
+        <div class="card">
+          <div class="card-hd"><h3>ข้อมูลผู้ป่วย</h3></div>
+          <div class="card-bd">
+            <div class="detail-row"><span class="detail-label">ชื่อ-สกุล</span><span class="detail-value">สมชาย ใจดี</span></div>
+            <div class="detail-row"><span class="detail-label">HN</span><span class="detail-value">640001</span></div>
+            <div class="detail-row"><span class="detail-label">เพศ / อายุ</span><span class="detail-value">ชาย 55 ปี</span></div>
+            <div class="detail-row"><span class="detail-label">สิทธิ์</span><span class="detail-value">บัตรทอง (UC)</span></div>
+            <div class="detail-row"><span class="detail-label">แพ้ยา</span><span class="detail-value"><span class="allergy-status nka">NKA — No Known Allergy</span></span></div>
+            <div class="detail-row"><span class="detail-label">โรคประจำตัว</span><span class="detail-value">HT, DLP</span></div>
+            <div class="detail-row"><span class="detail-label">ผู้ติดต่อ</span><span class="detail-value">นางสมศรี ใจดี (ภรรยา) 08X-XXX-XXXX</span></div>
+          </div>
+        </div>
+        <!-- Right: Current -->
+        <div class="card">
+          <div class="card-hd"><h3>สถานะปัจจุบัน</h3></div>
+          <div class="card-bd">
+            <div class="detail-row"><span class="detail-label">อาการ (CC)</span><span class="detail-value" style="color:var(--red-600);font-weight:600;">Cardiac arrest, หมดสติ</span></div>
+            <div class="detail-row"><span class="detail-label">Triage</span><span class="detail-value" style="color:var(--t-resus);font-weight:700;">Level 1 — Resuscitation</span></div>
+            <div class="detail-row"><span class="detail-label">โซน / เตียง</span><span class="detail-value">Resuscitation Zone · B1</span></div>
+            <div class="detail-row"><span class="detail-label">แพทย์</span><span class="detail-value">นพ.สมศักดิ์ รักษาดี</span></div>
+            <div class="detail-row"><span class="detail-label">สถานะ</span><span class="detail-value">กำลังรักษา</span></div>
+            <div class="detail-row"><span class="detail-label">มาถึง ER</span><span class="detail-value">14:32</span></div>
+            <div class="detail-row"><span class="detail-label">First Doctor Seen</span><span class="detail-value">14:33</span></div>
+            <div class="detail-row"><span class="detail-label">Door-to-Doctor</span><span class="detail-value" style="color:var(--green);font-weight:700;">1 นาที (ผ่าน SLA)</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Vitals snapshot -->
+      <div class="card" style="margin-top:14px;">
+        <div class="card-hd"><h3>สัญญาณชีพล่าสุด</h3><span style="font-size:11px;color:var(--slate-400);">14:45</span></div>
+        <div class="card-bd">
+          <div class="pq-vitals">
+            <div class="pq-vital"><div class="pq-vital-label">BP</div><div class="pq-vital-value" style="color:var(--red-600);">85/60</div></div>
+            <div class="pq-vital"><div class="pq-vital-label">HR</div><div class="pq-vital-value">92</div></div>
+            <div class="pq-vital"><div class="pq-vital-label">SpO2</div><div class="pq-vital-value" style="color:var(--warn);">93%</div></div>
+            <div class="pq-vital"><div class="pq-vital-label">Temp</div><div class="pq-vital-value">37.2</div></div>
+            <div class="pq-vital"><div class="pq-vital-label">RR</div><div class="pq-vital-value">ETT</div></div>
+            <div class="pq-vital"><div class="pq-vital-label">GCS</div><div class="pq-vital-value" style="color:var(--red-600);">3T</div></div>
+            <div class="pq-vital"><div class="pq-vital-label">EtCO2</div><div class="pq-vital-value">32</div></div>
+            <div class="pq-vital"><div class="pq-vital-label">ROSC</div><div class="pq-vital-value" style="color:var(--green);">14:33</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab: Vitals -->
+    <!-- Tab: Allergy -->
+    <div class="pp-panel" id="panelAllergy" style="display:none;">
+
+      <!-- Allergy Status Banner -->
+      <div class="allergy-banner nka" id="allergyBanner">
+        <div class="allergy-banner-icon nka">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:22px;height:22px;"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <div class="allergy-banner-body">
+          <div class="allergy-banner-title" id="allergyBannerTitle">NKA — No Known Allergy</div>
+          <div class="allergy-banner-desc" id="allergyBannerDesc">ยืนยันแล้วว่าไม่มีประวัติแพ้ยา · บันทึกโดย นพ.สมศักดิ์ · 14:35</div>
+        </div>
+        <button class="ap-btn outline" id="allergyChangeBtn" style="flex-shrink:0;">เปลี่ยนสถานะ</button>
+      </div>
+
+      <!-- Change allergy status form -->
+      <div class="card" id="allergyForm" style="display:none;margin-bottom:14px;">
+        <div class="card-hd"><h3>เปลี่ยนสถานะแพ้ยา</h3></div>
+        <div class="card-bd">
+          <div class="nv-row" style="display:flex;gap:8px;margin-bottom:14px;">
+            <label class="allergy-radio-card" id="arNKA">
+              <input type="radio" name="allergyStatus" value="nka" checked />
+              <div class="allergy-radio-icon nka"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <div>
+                <div class="allergy-radio-title">NKA</div>
+                <div class="allergy-radio-desc">No Known Allergy — ยืนยันว่าไม่แพ้ยา</div>
+              </div>
+            </label>
+            <label class="allergy-radio-card" id="arUnknown">
+              <input type="radio" name="allergyStatus" value="unknown" />
+              <div class="allergy-radio-icon unknown"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+              <div>
+                <div class="allergy-radio-title">Unknown</div>
+                <div class="allergy-radio-desc">ไม่ทราบ — ยังไม่ได้ซักประวัติ/ผู้ป่วยไม่รู้</div>
+              </div>
+            </label>
+            <label class="allergy-radio-card" id="arAllergy">
+              <input type="radio" name="allergyStatus" value="allergy" />
+              <div class="allergy-radio-icon allergy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+              <div>
+                <div class="allergy-radio-title">มีแพ้ยา</div>
+                <div class="allergy-radio-desc">บันทึกรายการยาที่แพ้</div>
+              </div>
+            </label>
+          </div>
+
+          <!-- Allergy details (shown when "มีแพ้ยา" selected) -->
+          <div id="allergyDetailForm" style="display:none;">
+            <div class="nv-row" style="display:flex;gap:8px;margin-bottom:10px;">
+              <div class="nv-field" style="flex:2;"><div class="nv-label">ชื่อยา/สาร<span style="color:var(--red-500);margin-left:2px;">*</span></div><input type="text" class="nv-input" id="allergyDrugName" placeholder="เช่น Aspirin, Penicillin"></div>
+              <div class="nv-field"><div class="nv-label">ประเภท</div>
+                <select class="nv-input" id="allergyType">
+                  <option value="drug">ยา (Drug)</option>
+                  <option value="food">อาหาร (Food)</option>
+                  <option value="env">สิ่งแวดล้อม (Environmental)</option>
+                  <option value="other">อื่นๆ</option>
+                </select>
+              </div>
+              <div class="nv-field"><div class="nv-label">ความรุนแรง</div>
+                <select class="nv-input" id="allergySeverity">
+                  <option value="mild">Mild — ผื่น คัน</option>
+                  <option value="moderate">Moderate — บวม หอบ</option>
+                  <option value="severe">Severe — Anaphylaxis</option>
+                </select>
+              </div>
+            </div>
+            <div class="nv-row" style="display:flex;gap:8px;margin-bottom:10px;">
+              <div class="nv-field" style="flex:1;"><div class="nv-label">อาการที่เกิด</div><input type="text" class="nv-input" id="allergyReaction" placeholder="เช่น ผื่นทั้งตัว, หายใจลำบาก, ลิ้นบวม"></div>
+              <div class="nv-field"><div class="nv-label">ข้อมูลจาก</div>
+                <select class="nv-input" id="allergySource">
+                  <option value="patient">ผู้ป่วยแจ้ง</option>
+                  <option value="family">ญาติแจ้ง</option>
+                  <option value="record">ประวัติเดิม (HIS)</option>
+                  <option value="incident">เกิดเหตุจริงใน Visit นี้</option>
+                </select>
+              </div>
+            </div>
+            <button class="ap-btn primary" id="allergyAddBtn" style="width:100%;">+ เพิ่มรายการแพ้ยา</button>
+          </div>
+
+          <div style="display:flex;gap:8px;margin-top:14px;">
+            <button class="ap-btn outline" id="allergyCancelBtn">ยกเลิก</button>
+            <button class="ap-btn primary" id="allergySaveBtn">บันทึกสถานะแพ้ยา</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Allergy Records -->
+      <div class="card">
+        <div class="card-hd"><h3>ประวัติแพ้ยา / สารก่อภูมิแพ้</h3></div>
+        <div class="card-bd" style="padding:0;">
+          <table class="pl-table">
+            <thead><tr><th>ยา/สาร</th><th>ประเภท</th><th>ความรุนแรง</th><th>อาการ</th><th>ข้อมูลจาก</th><th>บันทึกโดย</th><th>วันที่</th></tr></thead>
+            <tbody id="allergyRecords">
+              <tr><td colspan="7" style="text-align:center;color:var(--slate-400);padding:20px;font-size:13px;">NKA — ยืนยันไม่มีประวัติแพ้ยา</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Note -->
+      <div class="note-password" style="margin-top:14px;">
+        <div class="note-title">Noted — Demo Allergy Status</div>
+        <div class="note-row"><span class="note-label">NKA</span><span style="font-size:12px;color:var(--green);">ยืนยันไม่แพ้ยา → Order safety ไม่ block</span></div>
+        <div class="note-row"><span class="note-label">Unknown</span><span style="font-size:12px;color:var(--warn);">ยังไม่ทราบ → Order safety แสดง warning ทุกยา</span></div>
+        <div class="note-row"><span class="note-label">มีแพ้ยา</span><span style="font-size:12px;color:var(--red-500);">ระบุยาที่แพ้ → Order safety ตรวจเทียบอัตโนมัติ</span></div>
+        <div class="note-row"><span class="note-label">ทดสอบ</span><span style="font-size:12px;color:var(--slate-600);">เปลี่ยนสถานะ → เพิ่ม Aspirin (Severe) → ลองสั่งยา tab คำสั่ง</span></div>
+      </div>
+    </div>
+
+    <div class="pp-panel" id="panelVitals" style="display:none;">
+      <div class="card">
+        <div class="card-hd"><h3>Vital Signs — ย้อนหลัง</h3></div>
+        <div class="card-bd">
+          <table class="pl-table">
+            <thead><tr><th>เวลา</th><th>BP</th><th>HR</th><th>RR</th><th>SpO2</th><th>Temp</th><th>GCS</th><th>หมายเหตุ</th></tr></thead>
+            <tbody>
+              <tr><td>14:45</td><td>85/60</td><td>92</td><td>ETT</td><td style="color:var(--warn);">93%</td><td>37.2</td><td style="color:var(--red-600);">3T</td><td>Post-ROSC, Adrenaline drip</td></tr>
+              <tr><td>14:33</td><td>85/55</td><td style="color:var(--red-600);">92 (ROSC)</td><td>ETT</td><td style="color:var(--red-600);">88%</td><td>37.2</td><td style="color:var(--red-600);">3</td><td>ROSC after Defib #3</td></tr>
+              <tr><td>14:32</td><td style="color:var(--red-600);">—</td><td style="color:var(--red-600);">VF</td><td>0</td><td style="color:var(--red-600);">—</td><td>—</td><td style="color:var(--red-600);">3</td><td>Arrival, CPR ongoing</td></tr>
+              <tr><td>14:18 <span class="pq-tag" style="font-size:9px;padding:1px 5px;background:var(--red-100);color:var(--red-600);">EMS</span></td><td>—</td><td>PEA</td><td>ETT</td><td>—</td><td>—</td><td>3</td><td>Intubated on scene</td></tr>
+              <tr><td>14:10 <span class="pq-tag" style="font-size:9px;padding:1px 5px;background:var(--red-100);color:var(--red-600);">EMS</span></td><td>—</td><td>VF</td><td>0</td><td>—</td><td>—</td><td>3</td><td>Scene arrival, no pulse</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab: Orders -->
+    <div class="pp-panel" id="panelOrders" style="display:none;">
+
+      <!-- New Order Button -->
+      <div class="oe-new-bar">
+        <h3 style="font-size:14px;font-weight:700;color:var(--slate-900);">คำสั่งการรักษา</h3>
+        <button class="ap-btn primary" id="oeNewOrderBtn">+ สั่งใหม่</button>
+      </div>
+
+      <!-- Quick Order Buttons -->
+      <div class="oe-quick-grid" id="oeQuickGrid" style="display:none;">
+        <button class="oe-quick-btn" data-type="lab">
+          <div class="oe-quick-icon" style="background:var(--purple-bg);color:var(--purple);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>
+          </div>
+          <span>สั่ง Lab</span>
+        </button>
+        <button class="oe-quick-btn" data-type="xray">
+          <div class="oe-quick-icon" style="background:var(--blue-bg);color:var(--blue);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2"/><circle cx="12" cy="12" r="4"/></svg>
+          </div>
+          <span>สั่ง X-ray / CT</span>
+        </button>
+        <button class="oe-quick-btn" data-type="med">
+          <div class="oe-quick-icon" style="background:var(--green-bg);color:var(--green);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 8h-3V5a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v3H5a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h3v3a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-3h3a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1z"/></svg>
+          </div>
+          <span>สั่งยา</span>
+        </button>
+        <button class="oe-quick-btn" data-type="procedure">
+          <div class="oe-quick-icon" style="background:var(--orange-bg);color:var(--orange);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <span>Procedure</span>
+        </button>
+        <button class="oe-quick-btn" data-type="consult">
+          <div class="oe-quick-icon" style="background:var(--warn-bg);color:var(--warn);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <span>Consult</span>
+        </button>
+        <button class="oe-quick-btn" data-type="observe">
+          <div class="oe-quick-icon" style="background:var(--blue-light);color:var(--blue);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          </div>
+          <span>Observe</span>
+        </button>
+        <button class="oe-quick-btn" data-type="admit">
+          <div class="oe-quick-icon" style="background:var(--red-100);color:var(--red-600);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          </div>
+          <span>Admit</span>
+        </button>
+        <button class="oe-quick-btn" data-type="refer">
+          <div class="oe-quick-icon" style="background:var(--slate-100);color:var(--slate-600);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+          </div>
+          <span>Refer / ส่งต่อ</span>
+        </button>
+      </div>
+
+      <!-- Order Form (shown when type selected) -->
+      <div class="card" id="oeFormCard" style="display:none;margin-bottom:14px;">
+        <div class="card-hd">
+          <h3 id="oeFormTitle">สั่ง Lab</h3>
+          <button class="card-link" id="oeFormClose" style="border:none;background:none;cursor:pointer;font-family:inherit;">ยกเลิก</button>
+        </div>
+        <div class="card-bd" id="oeFormBody">
+          <!-- filled by JS -->
+        </div>
+      </div>
+
+      <!-- Existing Orders -->
+      <div class="card">
+        <div class="card-hd">
+          <h3>รายการคำสั่งทั้งหมด</h3>
+          <span style="font-size:11px;color:var(--slate-400);">10 รายการ</span>
+        </div>
+        <div class="card-bd" style="padding:0;">
+          <table class="pl-table">
+            <thead>
+              <tr><th>เวลา</th><th>ประเภท</th><th>คำสั่ง</th><th>Priority</th><th>สถานะ</th><th>สั่งโดย</th><th></th></tr>
+            </thead>
+            <tbody id="oeOrderList">
+              <!-- รอตอบรับ — ยกเลิกได้ -->
+              <tr><td>14:50</td><td><span class="oe-type-badge consult">Consult</span></td><td>Cardio consult → Cath Lab<div class="pl-hn">Door-to-balloon target</div></td><td><span class="oe-priority stat">STAT</span><div style="font-size:9px;color:var(--slate-400);">SLA: 15 นาที</div></td><td><span class="oe-status waiting-accept">รอตอบรับ</span></td><td>นพ.สมศักดิ์</td><td><button class="oe-cancel-btn">ยกเลิก</button></td></tr>
+              <!-- รอดำเนินการ — ยกเลิกได้ -->
+              <tr><td>14:48</td><td><span class="oe-type-badge lab">Lab</span></td><td>PT/INR, D-dimer<div class="pl-hn">เพิ่มเติมก่อน Cath Lab</div></td><td><span class="oe-priority now">NOW</span><div style="font-size:9px;color:var(--slate-400);">SLA: 30 นาที</div></td><td><span class="oe-status waiting-process">รอดำเนินการ</span></td><td>นพ.สมศักดิ์</td><td><button class="oe-cancel-btn">ยกเลิก</button></td></tr>
+              <!-- กำลังดำเนินการ — ยกเลิกไม่ได้ -->
+              <tr><td>14:42</td><td><span class="oe-type-badge xray">X-ray</span></td><td>Portable CXR<div class="pl-hn">ตรวจตำแหน่ง ETT + Central line</div></td><td><span class="oe-priority stat">STAT</span><div style="font-size:9px;color:var(--slate-400);">SLA: 15 นาที</div></td><td><span class="oe-status in-progress">กำลังดำเนินการ</span></td><td>นพ.สมศักดิ์</td><td></td></tr>
+              <!-- ให้แล้ว — ยกเลิกไม่ได้ -->
+              <tr><td>14:40</td><td><span class="oe-type-badge med">ยา</span></td><td>Heparin 5000 unit IV bolus<div class="pl-hn">ACS protocol</div></td><td><span class="oe-priority stat">STAT</span><div style="font-size:9px;color:var(--slate-400);">SLA: 15 นาที</div></td><td><span class="oe-status completed">ให้แล้ว</span></td><td>นพ.สมศักดิ์</td><td></td></tr>
+              <!-- เสร็จ — ยกเลิกไม่ได้ -->
+              <tr><td>14:38</td><td><span class="oe-type-badge xray">X-ray</span></td><td>12-lead ECG<div class="pl-hn">สงสัย STEMI · ST elevation V1-V4</div></td><td><span class="oe-priority stat">STAT</span><div style="font-size:9px;color:var(--slate-400);">SLA: 15 นาที</div></td><td><span class="oe-status completed">เสร็จ</span></td><td>นพ.สมศักดิ์</td><td></td></tr>
+              <!-- มีผลแล้ว — ยกเลิกไม่ได้ -->
+              <tr><td>14:36</td><td><span class="oe-type-badge lab">Lab</span></td><td>CBC, BMP, Troponin, Lactate, ABG<div class="pl-hn">ผลด่วน</div></td><td><span class="oe-priority stat">STAT</span><div style="font-size:9px;color:var(--slate-400);">SLA: 15 นาที</div></td><td><span class="oe-status has-result">มีผลแล้ว</span></td><td>นพ.สมศักดิ์</td><td></td></tr>
+              <!-- กำลังให้ (drip) — ยกเลิกไม่ได้ -->
+              <tr><td>14:35</td><td><span class="oe-type-badge procedure">Procedure</span></td><td>Target Temperature Management<div class="pl-hn">Target 33-36°C · Arctic Sun</div></td><td><span class="oe-priority now">NOW</span><div style="font-size:9px;color:var(--slate-400);">SLA: 30 นาที</div></td><td><span class="oe-status in-progress">กำลังดำเนินการ</span></td><td>นพ.สมศักดิ์</td><td></td></tr>
+              <tr><td>14:34</td><td><span class="oe-type-badge med">ยา</span></td><td>Adrenaline drip 0.1 mcg/kg/min<div class="pl-hn">Target MAP ≥65</div></td><td><span class="oe-priority stat">STAT</span><div style="font-size:9px;color:var(--slate-400);">SLA: 15 นาที</div></td><td><span class="oe-status giving">กำลังให้</span></td><td>นพ.สมศักดิ์</td><td></td></tr>
+              <tr><td>14:33</td><td><span class="oe-type-badge procedure">Procedure</span></td><td>Defibrillation #3 — 200J biphasic<div class="pl-hn">→ ROSC · Sinus rhythm HR 92</div></td><td><span class="oe-priority stat">STAT</span><div style="font-size:9px;color:var(--slate-400);">SLA: 15 นาที</div></td><td><span class="oe-status completed">เสร็จ</span></td><td>นพ.สมศักดิ์</td><td></td></tr>
+              <!-- ยกเลิกแล้ว (ตัวอย่าง) -->
+              <tr class="oe-cancelled"><td>14:30</td><td><span class="oe-type-badge lab">Lab</span></td><td>Blood Culture x2<div class="pl-hn">สั่งผิด — ยกเลิก</div></td><td><span class="oe-priority routine-pri">Routine</span><div style="font-size:9px;color:var(--slate-400);">SLA: 4 ชม.</div></td><td><span class="oe-status cancelled">ยกเลิกแล้ว</span></td><td>นพ.สมศักดิ์</td><td></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <!-- Note Demo -->
+      <div class="note-password" style="margin-top:14px;">
+        <div class="note-title">Noted — Demo Drug Safety Check</div>
+        <div style="font-size:11px;color:var(--slate-500);margin-bottom:8px;">กด "+ สั่งใหม่" → "สั่งยา" → พิมพ์ชื่อยาด้านล่างเพื่อทดสอบ</div>
+
+        <div style="border-bottom:1px solid var(--slate-200);padding-bottom:6px;margin-bottom:6px;font-size:11px;font-weight:700;color:var(--slate-400);">แพ้ยา (ALLERGY)</div>
+        <div class="note-row"><span class="note-value">Aspirin</span><span style="font-size:11px;color:var(--red-500);margin-left:4px;">→ แพ้ยาตรง</span></div>
+        <div class="note-row"><span class="note-value">Ibuprofen</span><span style="font-size:11px;color:var(--red-500);margin-left:4px;">→ cross-react กับ Aspirin (กลุ่ม NSAID)</span></div>
+        <div class="note-row"><span class="note-value">Amoxicillin</span><span style="font-size:11px;color:var(--red-500);margin-left:4px;">→ cross-react กับ Penicillin</span></div>
+
+        <div style="border-bottom:1px solid var(--slate-200);padding-bottom:6px;margin-bottom:6px;margin-top:8px;font-size:11px;font-weight:700;color:var(--slate-400);">ข้อห้ามใช้ (CONTRAINDICATION)</div>
+        <div class="note-row"><span class="note-value">Metformin</span><span style="font-size:11px;color:var(--red-500);margin-left:4px;">→ ห้ามใน Lactic acidosis (Lactate 12.5)</span></div>
+        <div class="note-row"><span class="note-value">Atenolol</span><span style="font-size:11px;color:var(--red-500);margin-left:4px;">→ ห้ามใน Cardiogenic shock</span></div>
+
+        <div style="border-bottom:1px solid var(--slate-200);padding-bottom:6px;margin-bottom:6px;margin-top:8px;font-size:11px;font-weight:700;color:var(--slate-400);">คำสั่งซ้ำ (DUPLICATE ORDER)</div>
+        <div class="note-row"><span class="note-value">Heparin</span><span style="font-size:11px;color:var(--warn);margin-left:4px;">→ ซ้ำ — สั่ง Heparin 5000u IV อยู่แล้ว</span></div>
+        <div class="note-row"><span class="note-value">Adrenaline</span><span style="font-size:11px;color:var(--warn);margin-left:4px;">→ ซ้ำ — ได้ Adrenaline drip อยู่แล้ว</span></div>
+
+        <div style="border-bottom:1px solid var(--slate-200);padding-bottom:6px;margin-bottom:6px;margin-top:8px;font-size:11px;font-weight:700;color:var(--slate-400);">Drug Interaction</div>
+        <div class="note-row"><span class="note-value">Warfarin</span><span style="font-size:11px;color:var(--red-500);margin-left:4px;">→ Major กับ Heparin (เลือดออก)</span></div>
+        <div class="note-row"><span class="note-value">Enoxaparin</span><span style="font-size:11px;color:var(--red-500);margin-left:4px;">→ Major กับ Heparin (เลือดออก)</span></div>
+        <div class="note-row"><span class="note-value">Dopamine</span><span style="font-size:11px;color:var(--orange);margin-left:4px;">→ Moderate กับ Adrenaline drip</span></div>
+        <div class="note-row"><span class="note-value">Alteplase</span><span style="font-size:11px;color:var(--red-500);margin-left:4px;">→ Major กับ Heparin (เลือดออก)</span></div>
+
+        <div style="border-top:1px solid var(--slate-200);margin-top:8px;padding-top:8px;">
+          <div class="note-row"><span class="note-value" style="background:var(--green-bg);color:var(--green);">Morphine</span><span style="font-size:11px;color:var(--green);margin-left:4px;">→ ปลอดภัย ไม่มี warning</span></div>
+          <div class="note-row"><span class="note-label">Override</span><span style="font-size:12px;color:var(--slate-600);">ถ้ามี warning ต้อง tick "Override" ก่อนจึงสั่งได้</span></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Tab: ผลตรวจ (รวม Lab + Imaging + Procedure) -->
+    <div class="pp-panel" id="panelResults" style="display:none;">
+
+      <!-- Critical Alert -->
+      <div class="allergy-banner has-allergy" style="margin-bottom:12px;">
+        <div class="allergy-banner-icon allergy">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:22px;height:22px;"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        </div>
+        <div class="allergy-banner-body">
+          <div class="allergy-banner-title" style="color:var(--red-600);">Critical Result — 3 รายการ</div>
+          <div class="allergy-banner-desc">Troponin I 15.8 · K+ 7.2 · Lactate 12.5</div>
+        </div>
+      </div>
+
+      <!-- Filter tabs -->
+      <div class="ap-summary" style="margin-bottom:12px;">
+        <button class="ap-tab active" data-result="all">ทั้งหมด <span class="ap-tab-count">8</span></button>
+        <button class="ap-tab" data-result="lab"><span class="ap-tab-dot" style="background:var(--purple);"></span>Lab <span class="ap-tab-count">3</span></button>
+        <button class="ap-tab" data-result="imaging"><span class="ap-tab-dot" style="background:var(--blue);"></span>Imaging <span class="ap-tab-count">2</span></button>
+        <button class="ap-tab" data-result="procedure"><span class="ap-tab-dot" style="background:var(--orange);"></span>Procedure <span class="ap-tab-count">3</span></button>
+      </div>
+
+      <!-- Results List -->
+      <div class="results-list">
+
+        <!-- Lab STAT -->
+        <div class="result-card" data-rtype="lab">
+          <div class="result-card-hd">
+            <div class="result-card-left">
+              <span class="oe-type-badge lab">Lab</span>
+              <span class="oe-priority stat">STAT</span>
+              <strong>CBC, BMP, Troponin, Lactate, ABG</strong>
+            </div>
+            <div class="result-card-right">
+              <span class="oe-status completed" style="font-size:10px;">มีผลแล้ว</span>
+              <span style="font-size:11px;color:var(--slate-400);">14:36 → 14:45 (9 นาที)</span>
+            </div>
+          </div>
+          <div class="result-card-bd">
+            <div class="result-highlights">
+              <span class="result-hl crit">Troponin I: 15.8 ng/mL ↑↑↑</span>
+              <span class="result-hl crit">K+: 7.2 mEq/L ↑↑</span>
+              <span class="result-hl crit">Lactate: 12.5 mmol/L ↑↑↑</span>
+              <span class="result-hl warn">Cr: 4.8 mg/dL ↑</span>
+              <span class="result-hl warn">Hb: 9.8 g/dL ↓</span>
+              <span class="result-hl ok">Na+: 138 mEq/L ✓</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ABG -->
+        <div class="result-card" data-rtype="lab">
+          <div class="result-card-hd">
+            <div class="result-card-left">
+              <span class="oe-type-badge lab">Lab</span>
+              <span class="oe-priority stat">STAT</span>
+              <strong>ABG (Arterial Blood Gas)</strong>
+            </div>
+            <div class="result-card-right">
+              <span class="oe-status completed" style="font-size:10px;">มีผลแล้ว</span>
+              <span style="font-size:11px;color:var(--slate-400);">14:36 → 14:45</span>
+            </div>
+          </div>
+          <div class="result-card-bd">
+            <div class="result-highlights">
+              <span class="result-hl crit">pH: 7.08 ↓↓</span>
+              <span class="result-hl crit">HCO3: 12 ↓↓</span>
+              <span class="result-hl warn">pCO2: 32 ↓</span>
+              <span class="result-hl warn">pO2: 68 ↓</span>
+            </div>
+            <div style="font-size:11px;color:var(--slate-600);margin-top:6px;padding:6px 8px;background:var(--slate-50);border-radius:6px;"><strong>Interpretation:</strong> Severe metabolic acidosis — Cardiac arrest + Lactic acidosis</div>
+          </div>
+        </div>
+
+        <!-- Coagulation (รอผล) -->
+        <div class="result-card" data-rtype="lab">
+          <div class="result-card-hd">
+            <div class="result-card-left">
+              <span class="oe-type-badge lab">Lab</span>
+              <span class="oe-priority now">NOW</span>
+              <strong>PT/INR, D-dimer</strong>
+            </div>
+            <div class="result-card-right">
+              <span class="oe-status waiting-process" style="font-size:10px;">รอผล</span>
+              <span style="font-size:11px;color:var(--orange);">สั่ง 14:48</span>
+            </div>
+          </div>
+          <div class="result-card-bd">
+            <div style="color:var(--orange);font-size:12px;">กำลังรอผลจาก Lab...</div>
+          </div>
+        </div>
+
+        <!-- ECG -->
+        <div class="result-card" data-rtype="imaging">
+          <div class="result-card-hd">
+            <div class="result-card-left">
+              <span class="oe-type-badge xray">Imaging</span>
+              <span class="oe-priority stat">STAT</span>
+              <strong>12-lead ECG</strong>
+            </div>
+            <div class="result-card-right">
+              <span class="oe-status completed" style="font-size:10px;">เสร็จ</span>
+              <span style="font-size:11px;color:var(--slate-400);">14:38 → 14:40 (2 นาที)</span>
+            </div>
+          </div>
+          <div class="result-card-bd">
+            <div class="result-highlights">
+              <span class="result-hl crit">ST Elevation V1-V4 → STEMI</span>
+            </div>
+            <div style="font-size:11px;color:var(--slate-600);margin-top:4px;">Sinus rhythm · HR 92 · Reciprocal ST depression II, III, aVF</div>
+            <div style="font-size:11px;color:var(--red-600);font-weight:600;margin-top:4px;">→ Acute Anterior STEMI — Emergent PCI / Cardio consult</div>
+          </div>
+        </div>
+
+        <!-- CXR (รอผล) -->
+        <div class="result-card" data-rtype="imaging">
+          <div class="result-card-hd">
+            <div class="result-card-left">
+              <span class="oe-type-badge xray">Imaging</span>
+              <span class="oe-priority stat">STAT</span>
+              <strong>Portable CXR</strong>
+            </div>
+            <div class="result-card-right">
+              <span class="oe-status in-progress" style="font-size:10px;">รอผลอ่าน</span>
+              <span style="font-size:11px;color:var(--blue);">สั่ง 14:42</span>
+            </div>
+          </div>
+          <div class="result-card-bd">
+            <div style="color:var(--blue);font-size:12px;">ถ่ายแล้ว · รอ Radiologist อ่านผล · ตรวจตำแหน่ง ETT + Central line</div>
+          </div>
+        </div>
+
+        <!-- Defibrillation -->
+        <div class="result-card" data-rtype="procedure">
+          <div class="result-card-hd">
+            <div class="result-card-left">
+              <span class="oe-type-badge procedure">Procedure</span>
+              <span class="oe-priority stat">STAT</span>
+              <strong>Defibrillation #3 — 200J</strong>
+            </div>
+            <div class="result-card-right">
+              <span class="oe-status completed" style="font-size:10px;">เสร็จ</span>
+              <span style="font-size:11px;color:var(--slate-400);">14:33</span>
+            </div>
+          </div>
+          <div class="result-card-bd">
+            <div class="result-highlights">
+              <span class="result-hl ok">→ ROSC · Sinus rhythm HR 92</span>
+            </div>
+            <div style="font-size:11px;color:var(--slate-600);margin-top:4px;">Total CPR: 21 นาที (EMS 20 + ER 1) · Defib ทั้งหมด: 3 ครั้ง</div>
+          </div>
+        </div>
+
+        <!-- CVC -->
+        <div class="result-card" data-rtype="procedure">
+          <div class="result-card-hd">
+            <div class="result-card-left">
+              <span class="oe-type-badge procedure">Procedure</span>
+              <span class="oe-priority stat">STAT</span>
+              <strong>Central Venous Catheter (CVC)</strong>
+            </div>
+            <div class="result-card-right">
+              <span class="oe-status completed" style="font-size:10px;">เสร็จ</span>
+              <span style="font-size:11px;color:var(--slate-400);">14:37</span>
+            </div>
+          </div>
+          <div class="result-card-bd">
+            <div style="font-size:12px;color:var(--slate-700);">Rt. Internal Jugular · 7Fr Triple lumen · ไม่มีภาวะแทรกซ้อน · รอ CXR ยืนยันตำแหน่ง</div>
+          </div>
+        </div>
+
+        <!-- TTM (กำลังทำ) -->
+        <div class="result-card" data-rtype="procedure">
+          <div class="result-card-hd">
+            <div class="result-card-left">
+              <span class="oe-type-badge procedure">Procedure</span>
+              <span class="oe-priority now">NOW</span>
+              <strong>Target Temperature Management</strong>
+            </div>
+            <div class="result-card-right">
+              <span class="oe-status in-progress" style="font-size:10px;">กำลังดำเนินการ</span>
+              <span style="font-size:11px;color:var(--blue);">เริ่ม 14:35</span>
+            </div>
+          </div>
+          <div class="result-card-bd">
+            <div style="font-size:12px;color:var(--slate-700);">Target 33-36°C · Arctic Sun · Temp ปัจจุบัน: <strong style="color:var(--blue);">35.8°C</strong> · ระยะเวลา 24 ชม.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Tab: Disposition -->
+    <div class="pp-panel" id="panelDisposition" style="display:none;">
+
+      <!-- Current Status -->
+      <div class="card" style="margin-bottom:14px;">
+        <div class="card-hd"><h3>สถานะปัจจุบัน</h3></div>
+        <div class="card-bd">
+          <div style="display:flex;gap:10px;flex-wrap:wrap;">
+            <div style="flex:1;min-width:150px;background:var(--slate-50);border-radius:10px;padding:12px;text-align:center;">
+              <div style="font-size:10px;font-weight:700;color:var(--slate-400);text-transform:uppercase;">อยู่ ER</div>
+              <div style="font-size:22px;font-weight:700;color:var(--slate-800);">2 ชม. 15 นาที</div>
+            </div>
+            <div style="flex:1;min-width:150px;background:var(--green-light);border-radius:10px;padding:12px;text-align:center;">
+              <div style="font-size:10px;font-weight:700;color:var(--slate-400);text-transform:uppercase;">Door-to-Doctor</div>
+              <div style="font-size:22px;font-weight:700;color:var(--green);">1 นาที</div>
+            </div>
+            <div style="flex:1;min-width:150px;background:var(--red-50);border-radius:10px;padding:12px;text-align:center;">
+              <div style="font-size:10px;font-weight:700;color:var(--slate-400);text-transform:uppercase;">Triage</div>
+              <div style="font-size:22px;font-weight:700;color:var(--red-600);">Level 1</div>
+            </div>
+            <div style="flex:1;min-width:150px;background:var(--blue-light);border-radius:10px;padding:12px;text-align:center;">
+              <div style="font-size:10px;font-weight:700;color:var(--slate-400);text-transform:uppercase;">ROSC</div>
+              <div style="font-size:22px;font-weight:700;color:var(--blue);">14:33</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Disposition Decision -->
+      <div class="card" style="margin-bottom:14px;">
+        <div class="card-hd"><h3>สรุป Disposition</h3></div>
+        <div class="card-bd">
+          <div class="nv-label">เลือกประเภทการจำหน่าย<span style="color:var(--red-500);margin-left:2px;">*</span></div>
+          <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:14px;">
+            <label class="tri-level-card level1" style="padding:12px 6px;" id="dispAdmit">
+              <input type="radio" name="dispType" value="admit" />
+              <div class="tri-level-num" style="width:28px;height:28px;font-size:11px;margin-bottom:4px;background:var(--red-600);">A</div>
+              <div class="tri-level-name" style="font-size:10px;color:var(--red-600);">Admit</div>
+              <div style="font-size:9px;color:var(--slate-500);">รับ Admit Ward</div>
+            </label>
+            <label class="tri-level-card level2" style="padding:12px 6px;" id="dispICU">
+              <input type="radio" name="dispType" value="icu" />
+              <div class="tri-level-num" style="width:28px;height:28px;font-size:11px;margin-bottom:4px;background:var(--orange);">IC</div>
+              <div class="tri-level-name" style="font-size:10px;color:var(--orange);">ICU</div>
+              <div style="font-size:9px;color:var(--slate-500);">ผู้ป่วยหนัก</div>
+            </label>
+            <label class="tri-level-card level4" style="padding:12px 6px;" id="dispDischarge">
+              <input type="radio" name="dispType" value="discharge" />
+              <div class="tri-level-num" style="width:28px;height:28px;font-size:11px;margin-bottom:4px;background:var(--green);">D</div>
+              <div class="tri-level-name" style="font-size:10px;color:var(--green);">Discharge</div>
+              <div style="font-size:9px;color:var(--slate-500);">กลับบ้าน</div>
+            </label>
+            <label class="tri-level-card level5" style="padding:12px 6px;" id="dispRefer">
+              <input type="radio" name="dispType" value="refer" />
+              <div class="tri-level-num" style="width:28px;height:28px;font-size:11px;margin-bottom:4px;background:var(--blue);">R</div>
+              <div class="tri-level-name" style="font-size:10px;color:var(--blue);">Refer</div>
+              <div style="font-size:9px;color:var(--slate-500);">ส่งต่อ รพ.อื่น</div>
+            </label>
+            <label class="tri-level-card" style="padding:12px 6px;border-color:var(--slate-300);" id="dispDead">
+              <input type="radio" name="dispType" value="dead" />
+              <div class="tri-level-num" style="width:28px;height:28px;font-size:11px;margin-bottom:4px;background:var(--slate-600);">X</div>
+              <div class="tri-level-name" style="font-size:10px;color:var(--slate-600);">เสียชีวิต</div>
+              <div style="font-size:9px;color:var(--slate-500);">Dead on/at ER</div>
+            </label>
+          </div>
+
+          <!-- Admit/ICU Form -->
+          <div id="dispAdmitForm" style="display:none;">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px;">
+              <div class="nv-field"><div class="nv-label">Ward ปลายทาง<span style="color:var(--red-500);margin-left:2px;">*</span></div>
+                <select class="nv-input" id="dispWard">
+                  <option value="">— เลือก Ward —</option>
+                  <option value="CCU">CCU (Coronary Care)</option>
+                  <option value="ICU">ICU (Intensive Care)</option>
+                  <option value="5A">Ward 5A (อายุรกรรม)</option>
+                  <option value="5B">Ward 5B (ศัลยกรรม)</option>
+                  <option value="NICU">NICU</option>
+                </select>
+              </div>
+              <div class="nv-field"><div class="nv-label">แพทย์รับ Admit</div>
+                <select class="nv-input" id="dispAdmitDoc">
+                  <option value="">— เลือกแพทย์ —</option>
+                  <option value="Cardio">พญ.กนก (Cardio on-call)</option>
+                  <option value="Med">นพ.ภาคิน (Med on-call)</option>
+                  <option value="Surg">นพ.อานนท์ (Surg on-call)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Discharge Form -->
+          <div id="dispDischargeForm" style="display:none;">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px;">
+              <div class="nv-field"><div class="nv-label">สภาพตอนกลับ</div>
+                <select class="nv-input" id="dispCondition">
+                  <option value="improved">ดีขึ้น (Improved)</option>
+                  <option value="same">เหมือนเดิม (Same)</option>
+                  <option value="ama">กลับเอง (AMA)</option>
+                </select>
+              </div>
+              <div class="nv-field"><div class="nv-label">นัดติดตาม</div>
+                <input type="date" class="nv-input" id="dispFollowUp" />
+              </div>
+            </div>
+            <div class="nv-field" style="margin-bottom:10px;"><div class="nv-label">คำแนะนำก่อนกลับบ้าน</div>
+              <textarea class="nv-textarea" rows="2" id="dispAdvice" placeholder="เช่น กินยาตามสั่ง, มาพบแพทย์ตามนัด, ถ้ามีอาการแย่ลงให้มาทันที..."></textarea>
+            </div>
+          </div>
+
+          <!-- Refer Form -->
+          <div id="dispReferForm" style="display:none;">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px;">
+              <div class="nv-field"><div class="nv-label">รพ.ปลายทาง<span style="color:var(--red-500);margin-left:2px;">*</span></div>
+                <select class="nv-input" id="dispReferDest">
+                  <option value="">— เลือก —</option>
+                  <option value="center">รพ.ศูนย์ (Cath Lab)</option>
+                  <option value="uni">รพ.มหาวิทยาลัย</option>
+                  <option value="spec">รพ.เฉพาะทาง</option>
+                </select>
+              </div>
+              <div class="nv-field"><div class="nv-label">เหตุผล</div>
+                <input type="text" class="nv-input" id="dispReferReason" placeholder="เช่น ต้องการ Cath Lab..." />
+              </div>
+            </div>
+          </div>
+
+          <!-- Shared fields -->
+          <div class="nv-field" style="margin-bottom:10px;"><div class="nv-label">Diagnosis สรุป<span style="color:var(--red-500);margin-left:2px;">*</span></div>
+            <input type="text" class="nv-input" id="dispDiagnosis" placeholder="เช่น Acute Anterior STEMI, Cardiac Arrest (VF) s/p ROSC" />
+          </div>
+          <div class="nv-field" style="margin-bottom:10px;"><div class="nv-label">สรุปการรักษาใน ER</div>
+            <textarea class="nv-textarea" rows="3" id="dispSummary" placeholder="สรุปสิ่งที่ทำใน ER ทั้งหมด...">Cardiac arrest (VF) at shopping mall. Bystander CPR ~8 min. EMS: CPR, Defib x2, ETT, Adrenaline x3. ER: Defib #3 → ROSC at 14:33. Post-ROSC: Adrenaline drip, TTM 33-36°C. ECG: STEMI anterior. Troponin I 15.8, K+ 7.2, Lactate 12.5, pH 7.08. Heparin given. Cardio consult → Cath Lab.</textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- Checklist (เปลี่ยนตามประเภท) -->
+      <div class="card" style="margin-bottom:14px;" id="dispChecklistCard" style="display:none;">
+        <div class="card-hd"><h3 id="dispChecklistTitle">Checklist ก่อนจำหน่าย</h3></div>
+        <div class="card-bd">
+          <div class="qp-checklist" id="dispChecklist">
+            <div style="text-align:center;color:var(--slate-400);padding:12px;font-size:13px;">กรุณาเลือกประเภทการจำหน่ายก่อน</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Action -->
+      <div class="reg-actions">
+        <button class="ap-btn outline" style="padding:12px 28px;font-size:14px;" id="dispCancel">ยกเลิก</button>
+        <button class="ap-btn primary" style="padding:12px 28px;font-size:14px;" id="dispSubmit">ยืนยันจำหน่ายผู้ป่วย</button>
+      </div>
+
+      <!-- Note -->
+      <div class="note-password" style="margin-top:14px;">
+        <div class="note-title">Noted — Demo Disposition</div>
+        <div class="note-row"><span class="note-value" style="background:var(--red-100);color:var(--red-600);">Admit</span><span style="font-size:11px;margin-left:4px;">รับ Admit เข้า Ward</span></div>
+        <div class="note-row"><span class="note-value" style="background:var(--orange-bg);color:var(--orange);">ICU</span><span style="font-size:11px;margin-left:4px;">ส่งห้องผู้ป่วยหนัก</span></div>
+        <div class="note-row"><span class="note-value" style="background:var(--green-bg);color:var(--green);">Discharge</span><span style="font-size:11px;margin-left:4px;">กลับบ้าน + คำแนะนำ + นัดติดตาม</span></div>
+        <div class="note-row"><span class="note-value" style="background:var(--blue-bg);color:var(--blue);">Refer</span><span style="font-size:11px;margin-left:4px;">ส่งต่อ รพ.อื่น (เช่น Cath Lab)</span></div>
+        <div class="note-row"><span class="note-value" style="background:var(--slate-100);color:var(--slate-600);">เสียชีวิต</span><span style="font-size:11px;margin-left:4px;">Dead on/at ER</span></div>
+      </div>
+    </div>
+
+    <div class="pp-panel" id="panelTimeline" style="display:none;">
+      <div class="card">
+        <div class="card-hd"><h3>Timeline รวม (EMS → ER)</h3></div>
+        <div class="card-bd">
+          <div class="tl-track" style="padding-left:18px;">
+            <div class="tl-item dispatch"><div class="tl-dot dispatch"></div><div class="tl-content"><div class="tl-time">14:02 <span class="tl-phase ems">EMS</span></div><div class="tl-event">รับแจ้งเหตุ — 1669</div></div></div>
+            <div class="tl-item scene"><div class="tl-dot scene"></div><div class="tl-content"><div class="tl-time">14:10 <span class="tl-phase ems">EMS</span></div><div class="tl-event">ถึงจุดเกิดเหตุ · เริ่ม CPR</div></div></div>
+            <div class="tl-item critical"><div class="tl-dot critical"></div><div class="tl-content"><div class="tl-time">14:13 <span class="tl-phase ems">EMS</span></div><div class="tl-event">Defib #1 (200J) · VF</div></div></div>
+            <div class="tl-item med"><div class="tl-dot med"></div><div class="tl-content"><div class="tl-time">14:15 <span class="tl-phase ems">EMS</span></div><div class="tl-event">Adrenaline #1 · Defib #2</div></div></div>
+            <div class="tl-item med"><div class="tl-dot med"></div><div class="tl-content"><div class="tl-time">14:18 <span class="tl-phase ems">EMS</span></div><div class="tl-event">Intubation ETT 7.5 · Adrenaline #2</div></div></div>
+            <div class="tl-item transport"><div class="tl-dot transport"></div><div class="tl-content"><div class="tl-time">14:22 <span class="tl-phase ems">EMS</span></div><div class="tl-event">เริ่มลำเลียง · Lucas device</div></div></div>
+            <div class="tl-item notify"><div class="tl-dot notify"></div><div class="tl-content"><div class="tl-time">14:24 <span class="tl-phase ems">EMS</span> <span class="tl-phase er">ER</span></div><div class="tl-event">แจ้ง ER ล่วงหน้า</div></div></div>
+            <div class="tl-item prepare"><div class="tl-dot prepare"></div><div class="tl-content"><div class="tl-time">14:25 <span class="tl-phase er">ER</span></div><div class="tl-event">เตรียมทีม Resuscitation · เตียง B1</div></div></div>
+            <div class="tl-item scene"><div class="tl-dot arriving"></div><div class="tl-content"><div class="tl-time">14:32 <span class="tl-phase ems">EMS</span> <span class="tl-phase er">ER</span></div><div class="tl-event">ผู้ป่วยถึง ER · Handover</div><div class="tl-detail">CPR 21 min · Defib x2 · Adrenaline x2 · ETT</div></div></div>
+            <div class="tl-item critical"><div class="tl-dot critical"></div><div class="tl-content"><div class="tl-time">14:33 <span class="tl-phase er">ER</span></div><div class="tl-event">Defib #3 → ROSC</div><div class="tl-detail">HR 92 · BP 85/60</div></div></div>
+            <div class="tl-item med"><div class="tl-dot med"></div><div class="tl-content"><div class="tl-time">14:34 <span class="tl-phase er">ER</span></div><div class="tl-event">Adrenaline drip · Post-ROSC care</div></div></div>
+            <div class="tl-item med"><div class="tl-dot med"></div><div class="tl-content"><div class="tl-time">14:36 <span class="tl-phase er">ER</span></div><div class="tl-event">Lab stat · ECG 12 leads</div></div></div>
+            <div class="tl-item prepare"><div class="tl-dot prepare"></div><div class="tl-content"><div class="tl-time">14:40 <span class="tl-phase er">ER</span></div><div class="tl-event">ลงทะเบียน HN 640001 · สมชาย ใจดี</div></div></div>
+            <div class="tl-item transport"><div class="tl-dot transport"></div><div class="tl-content"><div class="tl-time">14:50 <span class="tl-phase er">ER</span></div><div class="tl-event">ส่ง Cath Lab — สงสัย STEMI</div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab: EMS Handover -->
+    <div class="pp-panel" id="panelEms" style="display:none;">
+      <div class="card">
+        <div class="card-hd"><h3>EMS Handover</h3></div>
+        <div class="card-bd">
+          <div class="ho-crew-bar">
+            <div class="ho-crew-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;color:white;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
+            <div class="ho-crew-info"><strong>EMS 1669 · รถ ALS-05</strong><p>ทีม: จ.ส.อ.สมพร / จ.ส.อ.วีระ · Case PA-0301</p></div>
+          </div>
+          <div class="ho-times" style="margin-top:14px;">
+            <div class="ho-time-box"><div class="ho-time-label">รับแจ้ง</div><div class="ho-time-value">14:02</div></div>
+            <div class="ho-time-box"><div class="ho-time-label">ถึงที่เกิดเหตุ</div><div class="ho-time-value">14:10</div></div>
+            <div class="ho-time-box"><div class="ho-time-label">ออกจากที่เกิดเหตุ</div><div class="ho-time-value">14:22</div></div>
+            <div class="ho-time-box"><div class="ho-time-label">ถึง ER</div><div class="ho-time-value">14:32</div></div>
+          </div>
+          <div class="ho-note" style="margin-top:14px;">
+            <div class="ho-note-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px;"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/></svg>Handover Note</div>
+            <div class="ho-note-text">Cardiac arrest witness, VF, CPR 21 min, Defib x2, Adrenaline x2, ETT in place, EtCO2 18, ยังเป็น VF ตลอด</div>
+          </div>
+          <div class="ho-ack-bar acked" style="margin-top:14px;">
+            <div class="ho-ack-text"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px;vertical-align:middle;margin-right:4px;"><polyline points="20 6 9 17 4 12"/></svg>รับทราบ Handover แล้ว — Admin · 14:33</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+      </div><!-- end pp-content-area -->
+    </div><!-- end pp-layout -->
+    </div><!-- end ppMainLayout -->
+
+  </div>
+</div>
+
+<!-- Consult Note Modal (Specialist writes note) -->
+<div class="modal-overlay" id="consultNoteModal" style="display:none;">
+  <div class="modal" style="max-width:620px;">
+    <div class="modal-hd" style="background:var(--green-bg);">
+      <h3 style="color:var(--green);">Consultant Note / Recommendation</h3>
+      <button class="modal-close" id="cnCloseBtn">&times;</button>
+    </div>
+    <div class="modal-bd">
+      <!-- Consult info -->
+      <div class="tr-patient-bar" id="cnConsultInfo"></div>
+
+      <!-- Assessment -->
+      <div class="nv-field" style="margin-top:14px;">
+        <div class="nv-label">Assessment / Diagnosis<span style="color:var(--red-500);margin-left:2px;">*</span></div>
+        <textarea class="nv-textarea" rows="3" id="cnAssessment" placeholder="เช่น Evaluated — Confirmed Ectopic Pregnancy, Rt. tubal pregnancy with hemoperitoneum..."></textarea>
+      </div>
+
+      <!-- Recommendations -->
+      <div class="nv-label" style="margin-top:14px;">Recommendations / คำแนะนำ</div>
+      <div id="cnRecommendations">
+        <!-- Dynamic recommendation items -->
+      </div>
+      <button class="ap-btn outline" id="cnAddRec" style="width:100%;margin-top:6px;font-size:11px;padding:8px;">+ เพิ่ม Recommendation</button>
+
+      <!-- Add recommendation row (template) -->
+      <div id="cnAddRecRow" style="display:none;margin-top:8px;border:1.5px dashed var(--slate-300);border-radius:10px;padding:10px;">
+        <div style="display:flex;gap:8px;">
+          <div class="nv-field" style="width:140px;">
+            <select class="nv-input" id="cnRecType" style="font-size:11px;">
+              <option value="admit">Admit / รับไว้</option>
+              <option value="medication">สั่งยา / IV</option>
+              <option value="procedure">Procedure / OR</option>
+              <option value="observe">Observe / เฝ้าระวัง</option>
+              <option value="followup">Follow up / นัด OPD</option>
+              <option value="refer">ส่งต่อ / Refer</option>
+              <option value="other">อื่นๆ</option>
+            </select>
+          </div>
+          <div class="nv-field" style="flex:1;">
+            <input type="text" class="nv-input" id="cnRecText" placeholder="รายละเอียดคำแนะนำ..." style="font-size:11px;" />
+          </div>
+          <button class="ap-btn primary" id="cnRecConfirm" style="font-size:11px;padding:6px 14px;flex-shrink:0;">เพิ่ม</button>
+        </div>
+      </div>
+
+      <!-- Plan -->
+      <div class="nv-field" style="margin-top:14px;">
+        <div class="nv-label">Plan สรุป</div>
+        <textarea class="nv-textarea" rows="2" id="cnPlan" placeholder="เช่น Observe ต่อ → discharge ถ้า stable, Emergency OR ภายใน 1-2 ชม..."></textarea>
+      </div>
+    </div>
+    <div class="modal-ft" style="display:flex;gap:8px;justify-content:flex-end;padding:14px 20px;border-top:1px solid var(--slate-200);">
+      <button class="ap-btn outline" id="cnCancelBtn">ยกเลิก</button>
+      <button class="ap-btn primary" id="cnSubmitBtn" style="background:var(--green);">บันทึก Consult Note</button>
+    </div>
+  </div>
+</div>
+
+<!-- Consult Request Modal -->
+<div class="modal-overlay" id="consultModal" style="display:none;">
+  <div class="modal" style="max-width:620px;">
+    <div class="modal-hd" style="background:var(--warn-bg);">
+      <h3 style="color:var(--warn);">Consult แพทย์เฉพาะทาง</h3>
+      <button class="modal-close" id="conCloseBtn">&times;</button>
+    </div>
+    <div class="modal-bd">
+      <!-- Patient info -->
+      <div class="tr-patient-bar" id="conPatientInfo"></div>
+
+      <!-- Specialty -->
+      <div class="nv-label" style="margin-top:14px;">Specialty ที่ต้องการ Consult<span style="color:var(--red-500);margin-left:2px;">*</span></div>
+      <div class="con-spec-grid" id="conSpecGrid">
+        <button class="con-spec-btn" data-spec="Cardiology"><span class="con-spec-icon" style="background:#fef2f2;color:#dc2626;">C</span>Cardiology</button>
+        <button class="con-spec-btn" data-spec="Orthopedics"><span class="con-spec-icon" style="background:#f0fdf4;color:#16a34a;">O</span>Orthopedics</button>
+        <button class="con-spec-btn" data-spec="Surgery"><span class="con-spec-icon" style="background:#fef9c3;color:#ca8a04;">S</span>Surgery</button>
+        <button class="con-spec-btn" data-spec="Medicine"><span class="con-spec-icon" style="background:#eff6ff;color:#2563eb;">M</span>Medicine</button>
+        <button class="con-spec-btn" data-spec="Neurology"><span class="con-spec-icon" style="background:#faf5ff;color:#9333ea;">N</span>Neurology</button>
+        <button class="con-spec-btn" data-spec="Neurosurgery"><span class="con-spec-icon" style="background:#faf5ff;color:#7c3aed;">NS</span>Neurosurgery</button>
+        <button class="con-spec-btn" data-spec="OB-GYN"><span class="con-spec-icon" style="background:#fdf2f8;color:#db2777;">OB</span>OB-GYN</button>
+        <button class="con-spec-btn" data-spec="Pediatrics"><span class="con-spec-icon" style="background:#ecfeff;color:#0891b2;">P</span>Pediatrics</button>
+        <button class="con-spec-btn" data-spec="ENT"><span class="con-spec-icon" style="background:#f0fdfa;color:#0d9488;">E</span>ENT</button>
+        <button class="con-spec-btn" data-spec="Ophthalmology"><span class="con-spec-icon" style="background:#fefce8;color:#a16207;">Op</span>Ophthalmology</button>
+        <button class="con-spec-btn" data-spec="Psychiatry"><span class="con-spec-icon" style="background:#f5f3ff;color:#6d28d9;">Ps</span>Psychiatry</button>
+        <button class="con-spec-btn" data-spec="Anesthesiology"><span class="con-spec-icon" style="background:#fef2f2;color:#b91c1c;">An</span>Anesthesiology</button>
+      </div>
+
+      <!-- Urgency -->
+      <div class="nv-label" style="margin-top:14px;">ความเร่งด่วน</div>
+      <div class="tr-priority-row">
+        <label class="tr-priority-card">
+          <input type="radio" name="conUrgency" value="emergent" />
+          <span class="tr-pri-dot" style="background:var(--red-600);"></span>
+          <div><strong>Emergent</strong><span>ทันที ≤15 นาที</span></div>
+        </label>
+        <label class="tr-priority-card">
+          <input type="radio" name="conUrgency" value="urgent" checked />
+          <span class="tr-pri-dot" style="background:var(--orange);"></span>
+          <div><strong>Urgent</strong><span>≤30 นาที</span></div>
+        </label>
+        <label class="tr-priority-card">
+          <input type="radio" name="conUrgency" value="routine" />
+          <span class="tr-pri-dot" style="background:var(--green);"></span>
+          <div><strong>Routine</strong><span>≤4 ชม.</span></div>
+        </label>
+      </div>
+
+      <!-- Reason -->
+      <div class="nv-field" style="margin-top:14px;">
+        <div class="nv-label">เหตุผลที่ Consult / Clinical Question<span style="color:var(--red-500);margin-left:2px;">*</span></div>
+        <textarea class="nv-textarea" rows="2" id="conReason" placeholder="เช่น STEMI anterior ต้องการ PCI, Open fracture ต้อง OR..."></textarea>
+      </div>
+
+      <!-- Clinical info -->
+      <div class="nv-field" style="margin-top:10px;">
+        <div class="nv-label">ข้อมูลสำคัญ (Vitals/Labs/Imaging)</div>
+        <textarea class="nv-textarea" rows="2" id="conClinicalInfo" placeholder="สรุป vitals, ผล lab, imaging ที่เกี่ยวข้อง..."></textarea>
+      </div>
+
+      <!-- ER Dx + Need type -->
+      <div style="display:flex;gap:8px;margin-top:10px;">
+        <div class="nv-field" style="flex:1;">
+          <div class="nv-label">ER Diagnosis</div>
+          <input type="text" class="nv-input" id="conErDx" placeholder="เช่น Acute STEMI, R/O Ectopic" />
+        </div>
+        <div class="nv-field" style="flex:1;">
+          <div class="nv-label">สิ่งที่ต้องการจาก Specialist</div>
+          <select class="nv-input" id="conNeedType">
+            <option value="evaluate">ประเมิน (Evaluate)</option>
+            <option value="co-manage">ร่วมดูแล (Co-manage)</option>
+            <option value="operate">ผ่าตัด (Operate)</option>
+            <option value="transfer">รับย้าย (Transfer care)</option>
+            <option value="opinion">ขอความเห็น (Opinion only)</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Contact -->
+      <div class="nv-field" style="margin-top:10px;">
+        <div class="nv-label">เบอร์โทร / Extension ER ที่ติดต่อกลับ</div>
+        <input type="text" class="nv-input" id="conContactExt" placeholder="เช่น 1234" value="1669" />
+      </div>
+    </div>
+    <div class="modal-ft" style="display:flex;gap:8px;justify-content:flex-end;padding:14px 20px;border-top:1px solid var(--slate-200);">
+      <button class="ap-btn outline" id="conCancelBtn">ยกเลิก</button>
+      <button class="ap-btn primary" id="conSubmitBtn" style="background:var(--warn);">ส่ง Consult Request</button>
+    </div>
+  </div>
+</div>
+
+<!-- Transport Request Modal -->
+<div class="modal-overlay" id="transportModal" style="display:none;">
+  <div class="modal" style="max-width:580px;">
+    <div class="modal-hd">
+      <h3>เรียก Porter / เคลื่อนย้ายผู้ป่วย</h3>
+      <button class="modal-close" id="trCloseBtn">&times;</button>
+    </div>
+    <div class="modal-bd">
+      <!-- Patient info -->
+      <div class="tr-patient-bar" id="trPatientInfo"></div>
+
+      <!-- Destination type -->
+      <div class="nv-label" style="margin-top:14px;">จุดหมายปลายทาง<span style="color:var(--red-500);margin-left:2px;">*</span></div>
+      <div class="tr-dest-grid" id="trDestGrid">
+        <button class="tr-dest-btn" data-dest="ward">
+          <div class="tr-dest-icon" style="background:var(--green-bg);color:var(--green);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+          <span>Ward</span>
+        </button>
+        <button class="tr-dest-btn" data-dest="imaging">
+          <div class="tr-dest-icon" style="background:var(--blue-bg);color:var(--blue);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2"/><circle cx="12" cy="12" r="4"/></svg></div>
+          <span>Imaging</span>
+        </button>
+        <button class="tr-dest-btn" data-dest="lab">
+          <div class="tr-dest-icon" style="background:var(--purple-bg);color:var(--purple);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+          <span>Lab</span>
+        </button>
+        <button class="tr-dest-btn" data-dest="or">
+          <div class="tr-dest-icon" style="background:var(--red-100);color:var(--red-600);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 8h-3V5a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v3H5a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h3v3a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-3h3a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1z"/></svg></div>
+          <span>OR</span>
+        </button>
+        <button class="tr-dest-btn" data-dest="icu">
+          <div class="tr-dest-icon" style="background:var(--orange-bg);color:var(--orange);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+          <span>ICU / CCU</span>
+        </button>
+        <button class="tr-dest-btn" data-dest="refer">
+          <div class="tr-dest-icon" style="background:var(--warn-bg);color:var(--warn);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/></svg></div>
+          <span>Refer</span>
+        </button>
+        <button class="tr-dest-btn" data-dest="other">
+          <div class="tr-dest-icon" style="background:var(--slate-100);color:var(--slate-600);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg></div>
+          <span>อื่นๆ</span>
+        </button>
+      </div>
+
+      <!-- Specific destination -->
+      <div class="nv-field" id="trDestField" style="display:none;margin-top:10px;">
+        <div class="nv-label">ระบุปลายทาง<span style="color:var(--red-500);margin-left:2px;">*</span></div>
+        <select class="nv-input" id="trDestSelect"><option value="">— เลือก —</option></select>
+      </div>
+
+      <!-- Priority -->
+      <div class="nv-label" style="margin-top:14px;">ความเร่งด่วน</div>
+      <div class="tr-priority-row">
+        <label class="tr-priority-card">
+          <input type="radio" name="trPriority" value="emergency" />
+          <span class="tr-pri-dot" style="background:var(--red-600);"></span>
+          <div><strong>ฉุกเฉิน</strong><span>ต้องย้ายทันที</span></div>
+        </label>
+        <label class="tr-priority-card">
+          <input type="radio" name="trPriority" value="urgent" checked />
+          <span class="tr-pri-dot" style="background:var(--orange);"></span>
+          <div><strong>ด่วน</strong><span>ภายใน 15 นาที</span></div>
+        </label>
+        <label class="tr-priority-card">
+          <input type="radio" name="trPriority" value="normal" />
+          <span class="tr-pri-dot" style="background:var(--green);"></span>
+          <div><strong>ปกติ</strong><span>ภายใน 30 นาที</span></div>
+        </label>
+      </div>
+
+      <!-- Equipment -->
+      <div class="nv-label" style="margin-top:14px;">อุปกรณ์ที่ต้องการ</div>
+      <div class="tr-equip-grid">
+        <label class="oe-checkbox"><input type="checkbox" value="เตียง" checked>เตียง</label>
+        <label class="oe-checkbox"><input type="checkbox" value="Wheelchair">Wheelchair</label>
+        <label class="oe-checkbox"><input type="checkbox" value="Stretcher">Stretcher</label>
+        <label class="oe-checkbox"><input type="checkbox" value="Monitor">Monitor</label>
+        <label class="oe-checkbox"><input type="checkbox" value="O2">O2</label>
+        <label class="oe-checkbox"><input type="checkbox" value="Ventilator">Ventilator</label>
+        <label class="oe-checkbox"><input type="checkbox" value="IV pump">IV pump</label>
+        <label class="oe-checkbox"><input type="checkbox" value="Suction">Suction</label>
+      </div>
+
+      <!-- Isolation + Porter count -->
+      <div style="display:flex;gap:8px;margin-top:10px;">
+        <div class="nv-field" style="flex:1;">
+          <div class="nv-label">Isolation Precaution</div>
+          <select class="nv-input" id="trIsolation">
+            <option value="standard">Standard</option>
+            <option value="contact">Contact Precaution</option>
+            <option value="droplet">Droplet Precaution</option>
+            <option value="airborne">Airborne Precaution</option>
+          </select>
+        </div>
+        <div class="nv-field" style="flex:1;">
+          <div class="nv-label">ขอ Porter จำนวน</div>
+          <select class="nv-input" id="trPorterCount">
+            <option value="1">1 คน</option>
+            <option value="2">2 คน</option>
+            <option value="3">3 คน</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Note -->
+      <div class="nv-field" style="margin-top:10px;">
+        <div class="nv-label">หมายเหตุ / คำแนะนำพิเศษ</div>
+        <textarea class="nv-textarea" rows="2" id="trNote" placeholder="เช่น ต้องมี monitor ตลอด, ยา drip running, ผู้ป่วยน้ำหนักมาก..."></textarea>
+      </div>
+    </div>
+    <div class="modal-ft" style="display:flex;gap:8px;justify-content:flex-end;padding:14px 20px;border-top:1px solid var(--slate-200);">
+      <button class="ap-btn outline" id="trCancelBtn">ยกเลิก</button>
+      <button class="ap-btn primary" id="trSubmitBtn">ส่งคำขอ Porter</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast-container" id="toastContainer"></div>
+<script src="data.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
